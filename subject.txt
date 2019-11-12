@@ -1,0 +1,39 @@
+ft_printf
+
+Изучение си функции с переменным числом параметров
+Практика точным управлением опций вывода
+
+Ключ к успешному ft_printf - это хорошо структурированный и хороший расширяемый код. 
+вам придется прочитать ваш код еще раз через несколько недель или месяцев, чтобы расширить
+его функциональность в соответствии с вашими потребностями. 
+
+Разрешенные функции
+
+	• write
+	• malloc
+	• free
+	• exit
+	• va_start
+	• va_arg
+	• va_copy
+	• va_end
+ 
+Обязательная часть
+
+• Вы должны перекодировать функцию printf в libc.
+• Ваша функция будет называться ft_printf и будет прототипирована аналогично printf.
+• Вы не будете управлять буфером в функции printf.
+• Вы должны управлять следующими конверсиями: csp
+• Вы должны управлять следующими конверсиями: diouxX со следующими флагами: hh, h, l и L.
+• Вы должны управлять следующим преобразованием: f со следующими флагами: l и L.
+• Вы должны управлять %%
+• Вы должны управлять флагами # 0- + и пробелом
+• Вы должны управлять минимальной шириной поля
+• Вы должны управлять точностью
+
+Бонусная часть
+
+• More detailed conversions management: e and g. Be careful, your L flag must works with both of them to validate this bonus. 
+• More detailed flags management: *, $ and ’. 
+• Non-existing flags management: %b to print in binary, %r to print a string of nonprintable characters, %k to print a date in any ordinary ISO format etc. 
+• Management of alter tools for colors, fd or other fun stuff like that :) printf("Le fichier{cyan}%s{eoc} contient : {red}%s{eoc}", filename, str);
