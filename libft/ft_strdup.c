@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 20:17:59 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/14 19:55:13 by majosue          ###   ########.fr       */
+/*   Created: 2019/09/09 09:47:06 by majosue           #+#    #+#             */
+/*   Updated: 2019/11/12 20:59:01 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
-# include "libft/libft.h"
-# include <stdarg.h>
+#include "libft.h"
 
-int ft_printf(const char *restrict format, ...);
+char	*ft_strdup(const char *s1)
+{
+	char *s2;
 
-#endif
+	if ((s2 = ft_strnew(ft_strlen(s1))) == NULL)
+		return (NULL);
+	ft_strcpy(s2, s1);
+	return (s2);
+}

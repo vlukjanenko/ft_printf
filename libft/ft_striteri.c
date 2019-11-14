@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
+/*   By: majosue <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 20:17:59 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/14 19:55:13 by majosue          ###   ########.fr       */
+/*   Created: 2019/09/11 15:57:20 by majosue           #+#    #+#             */
+/*   Updated: 2019/09/29 11:46:23 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
-# include "libft/libft.h"
-# include <stdarg.h>
+#include "libft.h"
 
-int ft_printf(const char *restrict format, ...);
+void	ft_striteri(char *s, void (*f) (unsigned int, char *))
+{
+	unsigned int i;
 
-#endif
+	if (s && f)
+	{
+		i = 0;
+		while (s[i] != '\0')
+		{
+			(f)(i, s + i);
+			i++;
+		}
+	}
+}

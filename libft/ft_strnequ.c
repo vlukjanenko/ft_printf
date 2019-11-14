@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_strnequ.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
+/*   By: majosue <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 20:17:59 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/14 19:55:13 by majosue          ###   ########.fr       */
+/*   Created: 2019/09/11 18:01:28 by majosue           #+#    #+#             */
+/*   Updated: 2019/09/29 11:47:29 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
-# include "libft/libft.h"
-# include <stdarg.h>
+#include "libft.h"
 
-int ft_printf(const char *restrict format, ...);
+int	ft_strnequ(char const *s1, char const *s2, size_t n)
+{
+	size_t i;
 
-#endif
+	if (!s1 || !s2)
+		return (0);
+	i = 0;
+	while (i < n && (s1[i] != '\0' || s2[i] != '\0'))
+	{
+		if (s1[i] != s2[i])
+			return (0);
+		i++;
+	}
+	return (1);
+}

@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
+/*   By: majosue <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/12 20:17:59 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/14 19:55:13 by majosue          ###   ########.fr       */
+/*   Created: 2019/09/10 11:44:17 by majosue           #+#    #+#             */
+/*   Updated: 2019/09/30 12:24:11 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
-# include "libft/libft.h"
-# include <stdarg.h>
+#include "libft.h"
 
-int ft_printf(const char *restrict format, ...);
-
-#endif
+char	*ft_strchr(const char *s, int c)
+{
+	while (*s != '\0')
+	{
+		if (*s == (char)c)
+			return ((char*)s);
+		s++;
+	}
+	if (*s == (char)c)
+		return ((char*)s);
+	return (NULL);
+}

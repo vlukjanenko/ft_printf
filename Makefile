@@ -6,16 +6,16 @@
 #    By: majosue <majosue@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/13 10:14:46 by majosue           #+#    #+#              #
-#    Updated: 2019/11/13 11:14:50 by majosue          ###   ########.fr        #
+#    Updated: 2019/11/14 19:55:51 by majosue          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_printf
-HEADER = ft_print.h
+HEADER = ft_printf.h
 INCLUDES = lib/
 COMPILERC = gcc
-FLAGS = -Wall -Wextra -Werror
-SOURCES  =  ft_printf.c
+FLAGS = -g -Wall -Wextra -Werror
+SOURCES  =  ./ft_printf.c
 LIB = libft/ft_*.c libft/libft.h libft/libft.a
 OBJECTS = $(SOURCES:.c=.o)
 
