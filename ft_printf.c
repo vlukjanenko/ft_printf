@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:34:22 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/14 20:16:18 by majosue          ###   ########.fr       */
+/*   Updated: 2019/11/15 10:26:38 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,13 @@ int ft_printf(const char *restrict format, ...)
   }
 int main ()
 {
-  ft_endc();
-  ft_printf("Test print string");
+char tmp;
+  
+  tmp = 126;
+  /* ft_endc();
+  ft_printf("Test print string"); */
 
-   // printf("Проверка работы параметров %50.45f \n", 1.234567891011);
-   
-   //  printf("Проверка работы параметров %-50.10%\n", 126112231231231);
+printf("Проверка работы параметров%------R----------------25.25hhd\n", tmp);
+
     return (0);
 }
