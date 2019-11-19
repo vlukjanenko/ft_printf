@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 20:17:59 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/18 14:21:55 by majosue          ###   ########.fr       */
+/*   Updated: 2019/11/19 12:13:51 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@
 
 int	ft_lstp2back(t_list **begin_list, void const *content, size_t content_size);
 int ft_printf(const char *restrict format, ...);
+int	ft_readformat(t_list **str, char *format);
 
 #endif
