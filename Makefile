@@ -6,7 +6,7 @@
 #    By: majosue <majosue@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/13 10:14:46 by majosue           #+#    #+#              #
-#    Updated: 2019/11/19 12:13:17 by majosue          ###   ########.fr        #
+#    Updated: 2019/11/19 18:03:50 by majosue          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ HEADER = ft_printf.h
 INCLUDES = lib/
 COMPILERC = gcc
 FLAGS = -g #-Wall -Wextra -Werror
-SOURCES  =  ft_printf.c ft_lstp2back.c ft_readformat.c
+SOURCES  =  ft_printf.c ft_lstp2back.c ft_readformat.c ft_chkflags.c
 LIB = libft/ft_*.c libft/libft.h libft/libft.a
 OBJECTS = $(SOURCES:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:34:22 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/19 12:15:29 by majosue          ###   ########.fr       */
+/*   Updated: 2019/11/19 20:24:35 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,11 @@ int		ft_printf(const char *restrict format, ...)
 	t_list *str;
 
 	str = 0;
-	if (!ft_readformat(&str, (char *)format))
-		return (0);
+	if (ft_readformat(&str, (char *)format) == -1) //получили спискок строк вида строка строка формат строка и т.д.
+		{
+			//ft_claenup(&str);
+			return (0);
+		}
 	ft_printstr(&str);
 	return (100);
 }
@@ -51,7 +54,7 @@ int		main()
 
 	tmp = 126;
 	//  ft_endc();
-	ft_printf("% 0+-10.15d without persent");
+	ft_printf("well worked %lli");
 
 	//printf("Проверка работы параметров%------R----------------25.25hhd\n", tmp);
 

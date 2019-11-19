@@ -6,53 +6,23 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:10:10 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/19 12:14:43 by majosue          ###   ########.fr       */
+/*   Updated: 2019/11/19 18:50:59 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_compare(char *flags, char c)
+int	ft_gettab(char *(*ftab)[5])
 {
-	while (*flags)
-	{
-		if (*flags == c)
-			return (1);
-		flags++;
-	}
-	return (0);
+	(*ftab)[0] = " #0-+";
+	(*ftab)[1] = "0123456789";
+	(*ftab)[2] = ".0123456789";
+	(*ftab)[3] = "hlL";
+	(*ftab)[4] = "dinouxX%";
+	return (1);
 }
 
-int		ft_chkflags(char **str)
-{
-	char fs[6];
-	char mw[11];
-	char pc[12];
-	char lm[4];
-	char cs[9];
-
-	ft_strcpy(fs, " #0-+");
-	ft_strcpy(mw, "0123456789");
-	ft_strcpy(pc, ".0123456789");
-	ft_strcpy(lm, "hlL");
-	ft_strcpy(cs, "dinouxX%");
-	while (*(*str) && ft_compare(fs, *(*str)))
-		(*str)++;
-	while (*(*str) && ft_compare(mw, *(*str)))
-		(*str)++;
-	while (*(*str) && ft_compare(pc, *(*str)))
-		(*str)++;
-	while (*(*str) && ft_compare(lm, *(*str)))
-		(*str)++;
-	if (ft_compare(cs, *(*str)))
-	{
-		(*str)++;
-		return (1);
-	}
-	return (0);
-}
-
-int		ft_save_before_ptr(t_list **str, char **ptr, char **format)
+int	ft_save_before_ptr(t_list **str, char **ptr, char **format)
 {
 	if (*ptr == *format)
 		return (0);
@@ -62,10 +32,13 @@ int		ft_save_before_ptr(t_list **str, char **ptr, char **format)
 	return (1);
 }
 
-int		ft_save_after_ptr(t_list **str, char **ptr, char **format)
+int	ft_save_after_ptr(t_list **str, char **ptr, char **format)
 {
+	char *ftab[5];
+
+	ft_gettab(&ftab);
 	(*ptr)++;
-	if (!ft_chkflags(ptr))
+	if (!ft_chkflags(ptr, ftab))
 	{
 		*format = *ptr;
 		return (-1);
@@ -76,7 +49,7 @@ int		ft_save_after_ptr(t_list **str, char **ptr, char **format)
 	return (1);
 }
 
-int		ft_readformat(t_list **str, char *format)
+int	ft_readformat(t_list **str, char *format)
 {
 	char *ptr;
 
