@@ -6,20 +6,43 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:10:10 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/19 18:50:59 by majosue          ###   ########.fr       */
+/*   Updated: 2019/11/22 15:42:14 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_gettab(char *(*ftab)[5])
+void	ft_gettab(char *(*ftab)[5])
 {
 	(*ftab)[0] = " #0-+";
 	(*ftab)[1] = "0123456789";
 	(*ftab)[2] = ".0123456789";
 	(*ftab)[3] = "hlL";
-	(*ftab)[4] = "dinouxX%";
-	return (1);
+	(*ftab)[4] = "cspdiouxXf%";
+}
+
+t_fun	ft_get_f(char c)
+{
+	int i;
+	t_fun ftab[11];
+	char *s;
+
+	s = "cspdiouxXf%";
+	i = 0;
+	while (s[i] && s[i] != c)
+		i++;
+//	ftab[0] = &ft_char;
+	ftab[1] = &ft_string;
+//	ftab[2] = &ft_pointer;
+	ftab[3] = &ft_number;
+	ftab[4] = &ft_number;
+	ftab[5] = &ft_number;
+	ftab[6] = &ft_number;
+	ftab[7] = &ft_number;
+	ftab[8] = &ft_number;
+//	ftab[9] = &ft_float;
+//	ftab[10] = &ft_persent;
+	return (ftab[i]);
 }
 
 int	ft_save_before_ptr(t_list **str, char **ptr, char **format)
