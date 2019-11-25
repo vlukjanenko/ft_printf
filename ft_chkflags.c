@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 18:02:01 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/19 18:53:39 by majosue          ###   ########.fr       */
+/*   Updated: 2019/11/25 12:05:43 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	ft_chkdoubledot(char *ptr1, char *ptr2)
 	}
 	if (n > 1)
 		return (0);
+	if (n == 0)
+		return (-1);
 	return (1);
 }
 
