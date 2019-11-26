@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:34:22 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/26 13:17:18 by majosue          ###   ########.fr       */
+/*   Updated: 2019/11/26 20:10:02 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,16 @@ void ft_shiftarg(int n, va_list ap)
 		va_arg(ap, char *);
 }
 
+void ft_cleanflags(char *(*ftab)[5])
+{
+	(*ftab)[0] = "";
+	(*ftab)[1] = "";
+	(*ftab)[2] = "";
+	(*ftab)[3] = "";
+	(*ftab)[4] = "";
+
+}
+
 int ft_minus(char *str)
 {
 	if (ft_strchr(str, '-'))
@@ -28,10 +38,21 @@ int ft_minus(char *str)
 	return (0);
 }
 
+
+void ft_skipflags(char **str)
+{
+	char *flags[5];
+
+	ft_cleanflags(&flags);
+	flags[0] = " #0-+";
+	ft_chkflags(str, flags);
+}
+
 int ft_width(char *str)
 {
 	int w;
 
+	ft_skipflags(&str);
 	w = -1;
 	if (ft_strchr(str, '.'))
 		w = (0);
@@ -58,7 +79,7 @@ int ft_prec(char *str)
 		}
 	return (p);
 }
-char *ft_fillstr(int f, int w, int p, char *str)
+/* char *ft_fillstr(int f, int w, int p, char *str)
 {
 	char *rezult;
 	int add;
@@ -89,18 +110,9 @@ char *ft_fillstr(int f, int w, int p, char *str)
 	}
 	return (rezult);
 }
+ */
 
-void ft_cleanflags(char *(*ftab)[5])
-{
-	(*ftab)[0] = "";
-	(*ftab)[1] = "";
-	(*ftab)[2] = "";
-	(*ftab)[3] = "";
-	(*ftab)[4] = "";
-
-}
-
-int ft_sringflags(char *str)
+/* int ft_sringflags(char *str)
 {
 	char *s;
 	char *flags[5];
@@ -124,28 +136,37 @@ int ft_sringflags(char *str)
 	if (s != str)
 		return (0);
 	return (1);
+} */
+
+int ft_format_output(t_list **str, char *s)
+{
+	int w;
+	int p;
+	if (*str)
+	{}
+	w = ft_width(s);
+	p = ft_prec(s);
+	printf("width - |%d|", w);
+	printf("prec  - |%d|", p);
+	return (1);
 }
 
 int ft_string(t_list **str, int n, va_list ap)
 {
 	char *s;
-	int f;
-	int w;
-	int p;
-
-	s = (*str)->content;
-	s++;
-	if (!(ft_sringflags(s)))
-		return (0); //флаги инвалидные// либо валидные 
-	f = ft_minus(s);
-	w = ft_width(s);
-	p = ft_prec(s);
-	ft_shiftarg(n, ap);
-	s = va_arg(ap, char *);
-	free((*str)->content);
-	if (!((*str)->content = ft_fillstr(f, w, p, s)))
+	char *s1;
+	
+	if(!(s = ft_strsub((*str)->content, 1, (*str)->content_size - 1)))
 		return (0);
+	ft_shiftarg(n, ap);
+	if (!(s1 = ft_strdup(va_arg(ap, char *))))
+		return (0);
+	free((*str)->content);
+	(*str)->content = s1;
+	free(s1); 
 	(*str)->content_size = ft_strlen((*str)->content);
+	if (!(ft_format_output(str, s)))
+		return (0);
 	return (1);
 }
 
