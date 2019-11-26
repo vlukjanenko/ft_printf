@@ -6,29 +6,34 @@
 #    By: majosue <majosue@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/13 10:14:46 by majosue           #+#    #+#              #
-#    Updated: 2019/11/20 20:28:36 by majosue          ###   ########.fr        #
+#    Updated: 2019/11/26 10:58:20 by majosue          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_printf
+NAME =  libftprintf.a
 HEADER = ft_printf.h
 INCLUDES = lib/
 COMPILERC = gcc
-FLAGS = -g #-Wall -Wextra -Werror
+MAKERLIB = ar rc
+FLAGS = -g -Wall -Wextra -Werror
 SOURCES  =  ft_printf.c ft_lstp2back.c ft_readformat.c ft_chkflags.c
+LIB_O = libft/ft_*.o
 LIB = libft/ft_*.c libft/libft.h libft/libft.a
 OBJECTS = $(SOURCES:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJECTS) $(LIB)
-	$(COMPILERC) -o $(NAME) $(OBJECTS) -I $(INCLUDES) -L libft/ -lft
+	$(MAKERLIB) $(NAME) $(LIB_O) $(OBJECTS)
+	ranlib $(NAME) 
+# $(NAME): $(OBJECTS) $(LIB)
+# 	$(COMPILERC) -o $(NAME) $(OBJECTS) -I $(INCLUDES) -L libft/ -lft
 
 $(LIB):
 	@make -C libft/
 
 %.o: %.c $(HEADER)
-	$(COMPILERC) $(FLAGS) -o $@ -c $<
+	$(COMPILERC) $(FLAGS) -I $(INCLUDES) -o $@ -c $< 
 
 clean:
 	@rm -f $(OBJECTS)

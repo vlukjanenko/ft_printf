@@ -6,12 +6,21 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:34:22 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/25 20:17:32 by majosue          ###   ########.fr       */
+/*   Updated: 2019/11/26 13:17:18 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
+void ft_shiftarg(int n, va_list ap)
+{
+	int i;
+
+	i = 0;
+	while (i++ < n)
+		va_arg(ap, char *);
+}
+
 int ft_minus(char *str)
 {
 	if (ft_strchr(str, '-'))
@@ -36,7 +45,7 @@ int ft_width(char *str)
 	return (w);
 }
 
-int ft_pres(char *str)
+int ft_prec(char *str)
 {
 	int p;
 	char *point;
@@ -56,23 +65,28 @@ char *ft_fillstr(int f, int w, int p, char *str)
 	char *tmp;
 	char *tmp2;
 
+	if (!str)
+		{
+			rezult = ft_strdup("(null)");
+			return (rezult);
+		}
 	if (p >= 0)
 		rezult = ft_strsub(str, 0, p);
 	else 
 		rezult = ft_strdup(str);
 	add = w - ft_strlen(rezult);
-	if (f == 0 && add > 0)
+	if (add > 0)
 	{
 		tmp = ft_strnew(add);
 		ft_memset(tmp, ' ', add);
-		tmp2 = ft_strjoin(tmp, rezult);
+		if (f == 0)
+			tmp2 = ft_strjoin(tmp, rezult);
+		else
+			tmp2 = ft_strjoin(rezult, tmp);
 		free(tmp);
 		free(rezult);
 		rezult = tmp2;	
-		//if (!(rezult = ft_strdup(str)))
-		//	return (0);
 	}
-
 	return (rezult);
 }
 
@@ -114,7 +128,6 @@ int ft_sringflags(char *str)
 
 int ft_string(t_list **str, int n, va_list ap)
 {
-	int i;
 	char *s;
 	int f;
 	int w;
@@ -126,12 +139,9 @@ int ft_string(t_list **str, int n, va_list ap)
 		return (0); //флаги инвалидные// либо валидные 
 	f = ft_minus(s);
 	w = ft_width(s);
-	p = ft_pres(s);
-	i = 0;
-	while (i++ < n)
-		va_arg(ap, char *);
+	p = ft_prec(s);
+	ft_shiftarg(n, ap);
 	s = va_arg(ap, char *);
-	ft_fillstr(f, w, p, s);
 	free((*str)->content);
 	if (!((*str)->content = ft_fillstr(f, w, p, s)))
 		return (0);
@@ -141,13 +151,10 @@ int ft_string(t_list **str, int n, va_list ap)
 
 int ft_number(t_list **str, int n, va_list ap)
 {
-	int i;
 	int d;
 	char *s;
 
-	i = 0;
-	while (i++ < n)
-		va_arg(ap, char *);
+	ft_shiftarg(n, ap);
 	d = va_arg(ap, int);
 	s = ft_itoa(d);
 	free((*str)->content);
@@ -156,10 +163,26 @@ int ft_number(t_list **str, int n, va_list ap)
 	(*str)->content_size = ft_strlen(s);
 	return (1);
 }
+int ft_persent(t_list **str, int n, va_list ap)
+{
+	char *s;
+	
+	ft_shiftarg(n, ap);
+	s = "%";
+	free((*str)->content);
+	if (!((*str)->content = ft_strdup(s)))
+		return (0);
+	(*str)->content_size = ft_strlen(s);
+	return (1);
+}
+
 void ft_cleanup(void *content, size_t content_size)
 {
-	ft_bzero(content, content_size);
-	ft_memdel(&content);
+	if (content)
+	{
+		ft_bzero(content, content_size);
+		ft_memdel(&content);
+	}
 }
 
 int ft_printstr(t_list *str)
@@ -213,33 +236,24 @@ int ft_printf(const char *restrict format, ...)
 {
 	t_list *str;
 	va_list ap;
-	void (*del)(void *, size_t);
+	//void (*del)(void *, size_t);
+	int n;
 
-	del = &ft_cleanup;
+//	del = &ft_cleanup;
 	str = 0;
 	if (ft_readformat(&str, (char *)format) == -1) //получили спискок строк вида строка строка формат строка и т.д.
 	{
-		ft_lstdel(&str, del);
+	//	ft_lstdel(&str, del);
 		return (0);
 	}
 	va_start(ap, format);
 	if (ft_format(&str, 0, ap) == 0) //получили спискок строк вида строка строка формат строка и т.д.
 	{
-		ft_lstdel(&str, del);
+	//	ft_lstdel(&str, del);
 		return (0);
 	}
 	va_end(ap);
-	ft_printstr(str);
-	ft_lstdel(&str, del);
-	return (100);
-}
-
-int main()
-{
-	char tmp;
-
-	tmp = 126;
-	ft_printf("well worked %d - %10.1s\n", 140, "ABSOLUTE\n", 350);
-	printf("well worked %d - %10.1s", 140, "ABSOLUTE\n");
-	return (0);
+	n = ft_printstr(str);
+//	ft_lstdel(&str, del);
+	return (n);
 }

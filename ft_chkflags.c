@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 18:02:01 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/25 12:05:43 by majosue          ###   ########.fr       */
+/*   Updated: 2019/11/26 12:51:43 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ int	ft_chkflags(char **str, char *ftab[5])
 	begin = *str;
 	while (*(*str) && ft_compare(ftab[0], *(*str)))
 		(*str)++;
-	if (!(ft_chkdouble(begin, *str)))
-		return (0);
+	/* if (!(ft_chkdouble(begin, *str)))
+		return (0); */
 	while (*(*str) && ft_compare(ftab[1], *(*str)))
 		(*str)++;
 	begin = *str;

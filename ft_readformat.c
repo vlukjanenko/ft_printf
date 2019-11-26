@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:10:10 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/22 15:42:14 by majosue          ###   ########.fr       */
+/*   Updated: 2019/11/26 12:41:02 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_fun	ft_get_f(char c)
 	ftab[7] = &ft_number;
 	ftab[8] = &ft_number;
 //	ftab[9] = &ft_float;
-//	ftab[10] = &ft_persent;
+	ftab[10] = &ft_persent;
 	return (ftab[i]);
 }
 
@@ -64,7 +64,7 @@ int	ft_save_after_ptr(t_list **str, char **ptr, char **format)
 	if (!ft_chkflags(ptr, ftab))
 	{
 		*format = *ptr;
-		return (-1);
+		return (1);
 	}
 	if (!(ft_lstp2back(str, *format, *ptr - *format)))
 		return (-1);
