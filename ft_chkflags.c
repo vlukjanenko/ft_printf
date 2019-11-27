@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 18:02:01 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/26 12:51:43 by majosue          ###   ########.fr       */
+/*   Updated: 2019/11/27 17:36:56 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,29 +57,6 @@ int	ft_chkdoubledot(char *ptr1, char *ptr2)
 	return (1);
 }
 
-int	ft_chkdouble(char *ptr1, char *ptr2)
-{
-	int i;
-	int j;
-	int n;
-
-	n = ptr2 - ptr1;
-	i = 0;
-	j = 1;
-	while (i < n)
-	{
-		while (j < n)
-		{
-			if (ptr1[i] == ptr1[j] && i != j)
-				return (0);
-			j++;
-		}
-		j = 0;
-		i++;
-	}
-	return (1);
-}
-
 int	ft_chkflags(char **str, char *ftab[5])
 {
 	char *begin;
@@ -87,8 +64,6 @@ int	ft_chkflags(char **str, char *ftab[5])
 	begin = *str;
 	while (*(*str) && ft_compare(ftab[0], *(*str)))
 		(*str)++;
-	/* if (!(ft_chkdouble(begin, *str)))
-		return (0); */
 	while (*(*str) && ft_compare(ftab[1], *(*str)))
 		(*str)++;
 	begin = *str;

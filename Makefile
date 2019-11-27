@@ -6,7 +6,7 @@
 #    By: majosue <majosue@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/13 10:14:46 by majosue           #+#    #+#              #
-#    Updated: 2019/11/26 10:58:20 by majosue          ###   ########.fr        #
+#    Updated: 2019/11/27 17:53:17 by majosue          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ INCLUDES = lib/
 COMPILERC = gcc
 MAKERLIB = ar rc
 FLAGS = -g -Wall -Wextra -Werror
-SOURCES  =  ft_printf.c ft_lstp2back.c ft_readformat.c ft_chkflags.c
+SOURCES  =  ft_printf.c ft_lstp2back.c ft_readformat.c ft_chkflags.c \
+ft_gettab.c ft_get_f.c
 LIB_O = libft/ft_*.o
 LIB = libft/ft_*.c libft/libft.h libft/libft.a
 OBJECTS = $(SOURCES:.c=.o)

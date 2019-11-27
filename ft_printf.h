@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 20:17:59 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/25 16:53:05 by majosue          ###   ########.fr       */
+/*   Updated: 2019/11/27 13:45:56 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define FT_PRINTF_H
 # include "libft/libft.h"
 # include <stdarg.h>
-# define CONVERSIONS "cspdiouxXf%"
 
 typedef int (*t_fun)(t_list**, int, va_list);
 
@@ -35,7 +34,7 @@ int 	ft_number(t_list **str, int n, va_list ap);
 int 	ft_float(t_list **str, int n, va_list ap);
 int 	ft_persent(t_list **str, int n, va_list ap);
 int     ft_compare(char *flags, char c);
-void	ft_gettab(char *(*ftab)[5]);
+void	ft_gettab(char *(*ftab)[5], int index);
 
 
 #endif
