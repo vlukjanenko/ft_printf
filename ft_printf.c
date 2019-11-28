@@ -6,22 +6,13 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:34:22 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/27 15:18:31 by majosue          ###   ########.fr       */
+/*   Updated: 2019/11/28 21:12:54 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
 
-/* Shift to "n" agrument */
-void ft_shiftarg(int n, va_list ap)
-{
-	int i;
-
-	i = 0;
-	while (i++ < n)
-		va_arg(ap, char *);
-}
 /* Find '0' in flags */
 int ft_null(char *str)
 {
@@ -50,75 +41,189 @@ int ft_minus(char *str)
 	return (0);
 }
 
-void ft_skipflags(char **str)
+int ft_plus (char *str)
+{
+	if (ft_strchr(str, '+'))
+		return (1);
+	return (0);
+}
+
+int ft_skipflags(char **str)
 {
 	char *flags[5];
-	
+	char *str1;
+
+	str1 = *str;
 	ft_gettab(&flags, 0);
 	ft_chkflags(str, flags);
+	if (str1 == *str)
+		return (0);
+	return (1);
 }
 /* Get width */
-void ft_width(char *str, size_t *w)
+int ft_width(char *str, size_t *w)
 {
+	int present;
+	present = 0;
+	
 	ft_skipflags(&str);
-	*w = ft_atoi(str);
+	if (ft_isdigit(*str))
+		{
+			present = 1;
+			*w = ft_atoi(str);
+		}
+	return (present);
 }
 /* Get precision */
-void ft_prec(char *str, size_t *p)
+int ft_prec(char *str, size_t *p)
 {
 	char *point;
-	size_t p1;
+//	size_t p1;
+	int present;
 
-	p1 = *p;
+	present = 0;
+	//p1 = *p;
 	if ((point = ft_strchr(str, '.')))
 		{
-			 p1 = ft_atoi(point + 1);
+			present =  1;
+			*p = ft_atoi(point + 1);
 		}
-	if (*p > p1)
-		*p = p1;
+	//if (*p > p1)
+	//	*p = p1;
+	return (present);
 }
+
 /* Preformat output */
 int ft_format_output(t_list **str, char *s)
 {
 	size_t w;
- 	char *fill;
-	char *tmp;
-	
+	void *newstr;
+ 	
 	w = (*str)->content_size;
 	ft_width(s, &w);
 	if (w <= (*str)->content_size)
 		return (1);
-	if(!(fill = ft_strnew(w - (*str)->content_size)))
+	if (!(newstr = ft_memalloc(w)))
 		return (0);
 	if (ft_minus(s))
+		ft_add_right(str, &newstr, w, ' ');
+	else if (ft_null(s))
+		ft_add_left(str, &newstr, w, '0');
+	else
+		ft_add_left(str, &newstr, w, ' ');
+	free((*str)->content);
+	(*str)->content = newstr;
+	(*str)->content_size = w;
+	return(1);
+}
+
+int ft_fmt_plus(t_list **str, char *s)
+{
+	void *newstr;
+	size_t w;
+	char c;
+
+	if ((ft_plus(s) || ft_space(s)) && ft_isdigit(((char*)(*str)->content)[0]))
 	{
-		ft_memset(fill, ' ', w - (*str)->content_size);
-		tmp = (*str)->content;
-		if (!((*str)->content = ft_strjoin((*str)->content, fill)))
+		if ((w = (*str)->content_size + 1) < (*str)->content_size)
 			return (0);
-		free(tmp);
+		if (!(newstr = ft_memalloc(w)))
+			return (0);
+		if (ft_plus(s))
+			c = '+';
+		else
+			c = ' ';		
+		ft_add_left(str, &newstr, w, c);
+		free((*str)->content);
+		(*str)->content = newstr;
 		(*str)->content_size = w;
 	}
-	else if (ft_null(s))
+return (1);
+}
+int ft_fmt_prec_d(t_list **str, char *s)
+{
+	size_t p;	
+	void *newstr;
+
+	p = (*str)->content_size;
+	ft_prec(s, &p);	
+	if (p <= (*str)->content_size)
+		return (1);
+	if (!(newstr = ft_memalloc(p)))
+		return (0);
+	ft_add_left(str, &newstr, p, '0');
+	free((*str)->content);
+	(*str)->content = newstr;
+	(*str)->content_size = p;
+	return(1);
+}
+
+int ft_fmt_prec_s(t_list **str, char *s)
+{
+	char sign;
+	size_t p;	
+	size_t size;
+	void *newstr;
+
+	sign = ((char*)(*str)->content)[0];
+	p = (*str)->content_size - 1;
+	ft_prec(s, &p);	
+	if (p <= (*str)->content_size - 1)
+		return (1);
+	((char*)(*str)->content)[0] = '0';
+	size = p + 1;
+	if (!(newstr = ft_memalloc(size)))
+		return (0);
+	ft_add_left(str, &newstr, size, '0');
+	((char*)newstr)[0] = sign;
+	free((*str)->content);
+	(*str)->content = newstr;
+	(*str)->content_size = size;
+	return(1);
+}
+int ft_fmt_prec(t_list **str, char *s)
+{
+	if (ft_isdigit(((char*)(*str)->content)[0]))
 	{
-		ft_memset(fill, '0', w - (*str)->content_size);
-		tmp = (*str)->content;
-		if (!((*str)->content = ft_strjoin(fill, (*str)->content)))
+		if (!(ft_fmt_prec_d(str, s)))
 			return (0);
-		free(tmp);
-		(*str)->content_size = w;
 	}
 	else
 	{
-		ft_memset(fill, ' ', w - (*str)->content_size);
-		tmp = (*str)->content;
-		if (!((*str)->content = ft_strjoin(fill, (*str)->content)))
-			return (0);
-		free(tmp);
-		(*str)->content_size = w;
+		if (!(ft_fmt_prec_s(str, s)))
+			return (0);	
 	}
-	return (1);
+return (1);
 }
+/* int ft_formatoutput2(t_list **str, char *s)
+{
+	size_t w;
+	void *newstr;
+ 	size_t p;
+	
+	p = (*str)->content_size;
+	if (ft_plus && ft_isdigit((*str)->content))
+
+	if (!(ft_prec(s, &p)))
+			return (1);
+	
+	ft_width(s, &w);
+	if (p <= (*str)->content_size)
+		return (1);
+	if (!(newstr = ft_memalloc(w)))
+		return (0);
+	if (ft_minus(s))
+		ft_add_right(str, &newstr, w, ' ');
+	else if (ft_null(s))
+		ft_add_left(str, &newstr, w, '0');
+	else
+		ft_add_left(str, &newstr, w, ' ');
+	free((*str)->content);
+	(*str)->content = newstr;
+	(*str)->content_size = w;
+	return(1);
+}
+ */
 
 int ft_string(t_list **str, int n, va_list ap)
 {
@@ -150,19 +255,43 @@ int ft_string(t_list **str, int n, va_list ap)
 
 int ft_number(t_list **str, int n, va_list ap)
 {
+	char *s;
+	char *s1;
+	//size_t p;
 	int d;
+
+	if(!(s = ft_strsub((*str)->content, 1, (*str)->content_size - 1)))
+		return (0);
+	free((*str)->content);
+	ft_shiftarg(n, ap);
+	d = va_arg(ap, int);
+	s1 = ft_itoa(d);
+	if (!((*str)->content = ft_strdup(s1)))
+		return (0);
+	(*str)->content_size = ft_strlen(s1);
+	if (!(ft_fmt_plus(str, s)))
+		return (0);
+	if (!(ft_fmt_prec(str, s)))
+		return (0);
+	//if (!(ft_format_output1(str, s)))
+	//	return (0);
+	return (1);
+
+		
+	/* int d;
 	char *s;
 
 	ft_shiftarg(n, ap);
 	d = va_arg(ap, int);
+
 	s = ft_itoa(d);
 	free((*str)->content);
 	if (!((*str)->content = ft_strdup(s)))
 		return (0);
 	(*str)->content_size = ft_strlen(s);
-	/* if (!(ft_format_output(str, s)))
-		return (0); */
-	return (1);
+	if (!(ft_format_output(str, s)))
+		return (0);
+	return (1); */
 }
 int ft_persent(t_list **str, int n, va_list ap)
 {
@@ -221,7 +350,7 @@ int ft_printstr(t_list *str)
 	{
 		while (i < str->content_size)
 		{
-			ft_putchar(((char *)str->content)[i]);
+			ft_putchar(((char *)str->content)[i]); //заменить на врайт посмотреть как на скорость повлияет
 			i++;
 			n++;
 		}
