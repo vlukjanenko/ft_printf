@@ -1,41 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_f.c                                         :+:      :+:    :+:   */
+/*   ft_plus.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/27 17:51:47 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/29 13:00:35 by majosue          ###   ########.fr       */
+/*   Created: 2019/11/29 12:05:32 by majosue           #+#    #+#             */
+/*   Updated: 2019/11/29 12:08:00 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 /*
-** Return function pointer
+** Find '+' in flags
 */
 
-t_fun	ft_get_f(char c)
+int	ft_plus(char *str)
 {
-	int		i;
-	t_fun	ftab[11];
-	char *s[5];
-
-	ft_gettab(&s, 4);
-	i = 0;
-	while (s[4][i] && s[4][i] != c)
-		i++;
-	ftab[0] = &ft_char;
-	ftab[1] = &ft_string;
-	/* ftab[2] = &ft_pointer; */
-	ftab[3] = &ft_number;
-	ftab[4] = &ft_number;
-	ftab[5] = &ft_number;
-	ftab[6] = &ft_number;
-	ftab[7] = &ft_number;
-	ftab[8] = &ft_number;
-	/* ftab[9] = &ft_float; */
-	ftab[10] = &ft_percent;
-	return (ftab[i]);
+	if (ft_strchr(str, '+'))
+		return (1);
+	return (0);
 }

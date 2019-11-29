@@ -1,41 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_get_f.c                                         :+:      :+:    :+:   */
+/*   ft_prec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/27 17:51:47 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/29 13:00:35 by majosue          ###   ########.fr       */
+/*   Created: 2019/11/29 12:29:15 by majosue           #+#    #+#             */
+/*   Updated: 2019/11/29 12:31:38 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 /*
-** Return function pointer
+** Set precision in p and return 1 if it exist
 */
 
-t_fun	ft_get_f(char c)
+int	ft_prec(char *str, size_t *p)
 {
-	int		i;
-	t_fun	ftab[11];
-	char *s[5];
+	char	*point;
+	int		present;
 
-	ft_gettab(&s, 4);
-	i = 0;
-	while (s[4][i] && s[4][i] != c)
-		i++;
-	ftab[0] = &ft_char;
-	ftab[1] = &ft_string;
-	/* ftab[2] = &ft_pointer; */
-	ftab[3] = &ft_number;
-	ftab[4] = &ft_number;
-	ftab[5] = &ft_number;
-	ftab[6] = &ft_number;
-	ftab[7] = &ft_number;
-	ftab[8] = &ft_number;
-	/* ftab[9] = &ft_float; */
-	ftab[10] = &ft_percent;
-	return (ftab[i]);
+	present = 0;
+	if ((point = ft_strchr(str, '.')))
+	{
+		present = 1;
+		*p = ft_atoi(point + 1);
+	}
+	return (present);
 }

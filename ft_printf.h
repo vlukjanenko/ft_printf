@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 20:17:59 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/28 11:00:49 by majosue          ###   ########.fr       */
+/*   Updated: 2019/11/29 13:09:17 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,24 @@ int		ft_string(t_list **str, int n, va_list ap);
 int 	ft_pointer(t_list **str, int n, va_list ap);
 int 	ft_number(t_list **str, int n, va_list ap);
 int 	ft_float(t_list **str, int n, va_list ap);
-int 	ft_persent(t_list **str, int n, va_list ap);
+int 	ft_percent(t_list **str, int n, va_list ap);
 int     ft_compare(char *flags, char c);
 void	ft_gettab(char *(*ftab)[5], int index);
 void	ft_add_left(t_list **str, void **newstr, size_t w, char c);
 void	ft_add_right(t_list **str, void **newstr, size_t w, char c);
 void	ft_shiftarg(int n, va_list ap);
+int	    ft_null(char *str);
+int 	ft_space(char *str);
+int 	ft_minus(char *str);
+int		ft_plus(char *str);
+int		ft_skipflags(char **str);
+int		ft_width(char *str, size_t *w);
+int		ft_prec(char *str, size_t *p);
+int		ft_fmt_char(t_list **str, char *s);
+int		ft_fmt_plus(t_list **str, char *s);
+
+
+
+
 
 #endif
