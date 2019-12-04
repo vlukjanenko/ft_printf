@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 20:17:59 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/29 13:09:17 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/03 18:19:21 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,25 @@
 # include <stdarg.h>
 
 typedef int (*t_fun)(t_list**, int, va_list);
+//typedef char* (*t_num)(char*, va_list);
+
+typedef union u_type
+{
+    int i;
+    char c;
+    short int si;
+    long int li;
+    long long int lli;
+} t_type;
+
+typedef union u_type_u
+{
+    unsigned int i;
+    unsigned char c;
+    unsigned short int si;
+    unsigned long int li;
+    unsigned long long int lli;
+} t_type_u;
 
 int 	ft_printf(const char *restrict format, ...);
 /* validator format string */
@@ -31,6 +50,9 @@ int		ft_char(t_list **str, int n, va_list ap);
 int		ft_string(t_list **str, int n, va_list ap);
 int 	ft_pointer(t_list **str, int n, va_list ap);
 int 	ft_number(t_list **str, int n, va_list ap);
+int 	ft_number_o(t_list **str, int n, va_list ap);
+int 	ft_number_u(t_list **str, int n, va_list ap);
+int 	ft_number_x(t_list **str, int n, va_list ap);
 int 	ft_float(t_list **str, int n, va_list ap);
 int 	ft_percent(t_list **str, int n, va_list ap);
 int     ft_compare(char *flags, char c);
@@ -47,9 +69,7 @@ int		ft_width(char *str, size_t *w);
 int		ft_prec(char *str, size_t *p);
 int		ft_fmt_char(t_list **str, char *s);
 int		ft_fmt_plus(t_list **str, char *s);
-
-
-
-
+char	*ft_itoa_base(long long int value, int base);
+char	*ft_itoa_base_u(unsigned long long int value, int base);
 
 #endif

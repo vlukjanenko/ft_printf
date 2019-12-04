@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 18:02:01 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/27 17:36:56 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/02 19:59:44 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int	ft_chklen(char *ptr1, char *ptr2)
 	if (n == 0 || n == 1)
 		return (1);
 	if ((n == 2 && ptr1[0] == 'h' && ptr1[1] == 'h'))
-		return (1);
+		return (2);
 	if ((n == 2 && ptr1[0] == 'l' && ptr1[1] == 'l'))
-		return (1);
+		return (2);
 	return (0);
 }
 

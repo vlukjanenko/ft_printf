@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 17:51:47 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/29 13:00:35 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/03 18:54:11 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ t_fun	ft_get_f(char c)
 	/* ftab[2] = &ft_pointer; */
 	ftab[3] = &ft_number;
 	ftab[4] = &ft_number;
-	ftab[5] = &ft_number;
-	ftab[6] = &ft_number;
-	ftab[7] = &ft_number;
-	ftab[8] = &ft_number;
+	ftab[5] = &ft_number_o;
+	ftab[6] = &ft_number_u;
+	ftab[7] = &ft_number_x;
+	ftab[8] = &ft_number_x;
 	/* ftab[9] = &ft_float; */
 	ftab[10] = &ft_percent;
 	return (ftab[i]);

@@ -6,12 +6,43 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:34:22 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/29 14:04:34 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/04 10:02:51 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
+
+int ft_sharp(char *s)
+{
+	if (ft_strchr(s, '#'))
+		return (1);
+	return (0);
+}
+
+int	ft_fmt_sharp(t_list **str, char *s)
+{
+	size_t	w;
+	void	*newstr;
+	char	c;
+
+	if ((ft_sharp(s) || ft_space(s)) && ft_isdigit(((char *)(*str)->content)[0]))
+	{
+		if ((w = (*str)->content_size + 1) < (*str)->content_size)
+			return (0);
+		if (!(newstr = ft_memalloc(w)))
+			return (0);
+		if (ft_plus(s))
+			c = '+';
+		else
+			c = ' ';
+		ft_add_left(str, &newstr, w, c);
+		free((*str)->content);
+		(*str)->content = newstr;
+		(*str)->content_size = w;
+	}
+	return (1);
+}
 
 int ft_fmt_width_d(t_list **str, char *s)
 {
@@ -36,6 +67,18 @@ int ft_fmt_width_d(t_list **str, char *s)
 	(*str)->content = newstr;
 	(*str)->content_size = w;
 	return(1);
+}
+void ft_fmt_lowc(t_list **str)
+{
+	size_t i;
+
+	i = 0;
+	while (i < (*str)->content_size)
+	{
+		if (((char*)(*str)->content)[i] >= 'A' && ((char*)(*str)->content)[i] <= 'X')
+			((char*)(*str)->content)[i] = ((char*)(*str)->content)[i] + 32;
+		i++;
+	}
 }
 
 int ft_fmt_prec_d(t_list **str, char *s)
@@ -142,7 +185,212 @@ int ft_fmt_width(t_list **str, char *s)
 return (1);
 }
 
+void ft_get_size_part2(char *str, long long int *d, va_list ap)
+{
+	t_type tmp;
+
+	if (str[0] == 'h' && str[1] != 'h')
+		{
+			tmp.si = va_arg(ap, int);
+			*d = tmp.si;
+		}
+	if (str[0] == 'l' && str[1] != 'l')
+		{
+			tmp.li = va_arg(ap, long int);
+			*d = tmp.li;
+		}
+	if (str[0] != 'l' && str[0] != 'h' && str[0] != 'L')
+		{
+			tmp.i = va_arg(ap, int);
+			*d = tmp.i;
+		}
+}
+void ft_get_size(char *str, long long int *d, va_list ap)
+{
+	char *s[5];
+	
+	ft_gettab(&s, 5);
+	t_type tmp;
+
+	s[3] = "";
+	s[4] = "";
+	ft_chkflags(&str, s);
+	if (str[0] == 'l' && str [1] == 'l')
+		{
+			tmp.lli = va_arg(ap, long long int);
+			*d = tmp.lli;
+		}
+	if (str[0] == 'h' && str [1] == 'h')
+		{
+			tmp.c =  va_arg(ap, int);
+			*d = tmp.c;
+		}
+	ft_get_size_part2(str, d, ap);
+}
+//------------
+void ft_get_size_u_part2(char *str, unsigned long long int *d, va_list ap)
+{
+	t_type_u tmp;
+
+	if (str[0] == 'h' && str[1] != 'h')
+		{
+			tmp.si = va_arg(ap, int);
+			*d = tmp.si;
+		}
+	if (str[0] == 'l' && str[1] != 'l')
+		{
+			tmp.li = va_arg(ap, long int);
+			*d = tmp.li;
+		}
+	if (str[0] != 'l' && str[0] != 'h' && str[0] != 'L')
+		{
+			tmp.i = va_arg(ap, int);
+			*d = tmp.i;
+		}
+}
+void ft_get_size_u(char *str, unsigned long long int *d, va_list ap)
+{
+	char *s[5];
+	
+	ft_gettab(&s, 5);
+	t_type_u tmp;
+
+	s[3] = "";
+	s[4] = "";
+	ft_chkflags(&str, s);
+	if (str[0] == 'l' && str [1] == 'l')
+		{
+			tmp.lli = va_arg(ap, long long int);
+			*d = tmp.lli;
+		}
+	if (str[0] == 'h' && str [1] == 'h')
+		{
+			tmp.c =  va_arg(ap, int);
+			*d = tmp.c;
+		}
+	ft_get_size_u_part2(str, d, ap);
+}
+
+
 int ft_number(t_list **str, int n, va_list ap)
+{
+	char *s;
+	char *s1;
+	long long int d;
+
+	if(!(s = ft_strsub((*str)->content, 1, (*str)->content_size - 1)))
+		return (0);
+	free((*str)->content);
+	(*str)->content = 0;
+	ft_shiftarg(n, ap); //тут оставим или перенесем не знаю
+	ft_get_size(s, &d, ap);
+	if (!(s1 = ft_itoa_base(d, 10)))
+		{
+			free(s);
+			return (0);
+		}
+	(*str)->content = s1;
+	(*str)->content_size = ft_strlen(s1);
+	if (!(ft_fmt_plus(str, s)) ||\
+		!(ft_fmt_prec(str, s)) ||\
+		!(ft_fmt_width(str, s)))
+		{
+			free(s);
+			return (0);
+		}
+	free(s);
+	return (1);
+}
+
+int ft_number_o(t_list **str, int n, va_list ap)
+{
+	char *s;
+	char *s1;
+	long long int d;
+
+	if(!(s = ft_strsub((*str)->content, 1, (*str)->content_size - 1)))
+		return (0);
+	free((*str)->content);
+	(*str)->content = 0;
+	ft_shiftarg(n, ap); //тут оставим или перенесем не знаю
+	ft_get_size(s, &d, ap);
+	if (!(s1 = ft_itoa_base_u(d, 8)))
+		{
+			free(s);
+			return (0);
+		}
+	(*str)->content = s1;
+	(*str)->content_size = ft_strlen(s1);
+	if (!(ft_fmt_plus(str, s)) ||\
+		!(ft_fmt_prec(str, s)) ||\
+		!(ft_fmt_width(str, s)))
+		{
+			free(s);
+			return (0);
+		}
+	free(s);
+	return (1);
+}
+int ft_number_x(t_list **str, int n, va_list ap)
+{
+	char *s;
+	char *s1;
+	unsigned long long int d;
+
+	if(!(s = ft_strsub((*str)->content, 1, (*str)->content_size - 1)))
+		return (0);
+	free((*str)->content);
+	(*str)->content = 0;
+	ft_shiftarg(n, ap); //тут оставим или перенесем не знаю
+	ft_get_size_u(s, &d, ap);
+	if (!(s1 = ft_itoa_base_u(d, 16)))
+		{
+			free(s);
+			return (0);
+		}
+	(*str)->content = s1;
+	(*str)->content_size = ft_strlen(s1);
+	if (!(ft_fmt_prec(str, s)) ||\
+		!(ft_fmt_width(str, s)))
+		{
+			free(s);
+			return (0);
+		}
+	s[ft_strlen(s) - 1] == 'x' ? ft_fmt_lowc(str) : s;
+	free(s);
+	return (1);
+}
+
+int ft_number_u(t_list **str, int n, va_list ap)
+{
+	char *s;
+	char *s1;
+	unsigned long long int d;
+
+	if(!(s = ft_strsub((*str)->content, 1, (*str)->content_size - 1)))
+		return (0);
+	free((*str)->content);
+	(*str)->content = 0;
+	ft_shiftarg(n, ap); //тут оставим или перенесем не знаю
+	ft_get_size_u(s, &d, ap);
+	if (!(s1 = ft_itoa_base_u(d, 10)))
+		{
+			free(s);
+			return (0);
+		}
+	(*str)->content = s1;
+	(*str)->content_size = ft_strlen(s1);
+	if (!(ft_fmt_prec(str, s)) ||\
+		!(ft_fmt_width(str, s)))
+		{
+			free(s);
+			return (0);
+		}
+	free(s);
+	return (1);
+}
+
+/* int ft_number(t_list **str, int n, va_list ap)
 {
 	char *s;
 	char *s1;
@@ -170,7 +418,7 @@ int ft_number(t_list **str, int n, va_list ap)
 	free(s);
 	return (1);
 }
-
+ */
 void ft_cleanup(void *content, size_t content_size)
 {
 	if (content)
