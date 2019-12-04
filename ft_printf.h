@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 20:17:59 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/03 18:19:21 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/04 19:33:25 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,12 @@ int		ft_skipflags(char **str);
 int		ft_width(char *str, size_t *w);
 int		ft_prec(char *str, size_t *p);
 int		ft_fmt_char(t_list **str, char *s);
-int		ft_fmt_plus(t_list **str, char *s);
+int     ft_fmt_width(t_list **str, char *s);
+int     ft_fmt_prec(t_list **str, char *s);
 char	*ft_itoa_base(long long int value, int base);
 char	*ft_itoa_base_u(unsigned long long int value, int base);
+void	ft_get_size(char *str, long long int *d, va_list ap);
+void	ft_get_size_u(char *str, unsigned long long int *d, va_list ap);
+int     ft_sharp(char *s);
 
 #endif
