@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:34:22 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/04 10:02:51 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/04 14:55:19 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,31 @@ int ft_sharp(char *s)
 	return (0);
 }
 
-int	ft_fmt_sharp(t_list **str, char *s)
+int	ft_fmt_sharp_o(t_list **str, char *s)
 {
-	size_t	w;
 	void	*newstr;
-	char	c;
+	
+	if (!ft_sharp(s))
+		return (1);
+	if (!(newstr = ft_strjoin("0", (char *)(*str)->content)))
+		return (0);
+	free((*str)->content);
+	(*str)->content = newstr;
+	(*str)->content_size += 1;
+	return (1);
+}
 
-	if ((ft_sharp(s) || ft_space(s)) && ft_isdigit(((char *)(*str)->content)[0]))
-	{
-		if ((w = (*str)->content_size + 1) < (*str)->content_size)
-			return (0);
-		if (!(newstr = ft_memalloc(w)))
-			return (0);
-		if (ft_plus(s))
-			c = '+';
-		else
-			c = ' ';
-		ft_add_left(str, &newstr, w, c);
-		free((*str)->content);
-		(*str)->content = newstr;
-		(*str)->content_size = w;
-	}
+int	ft_fmt_sharp_x(t_list **str, char *s)
+{
+	void	*newstr;
+	
+	if (((char *)(*str)->content)[0] == '0' || !ft_sharp(s))
+		return (1);
+	if (!(newstr = ft_strjoin("0X", (char *)(*str)->content)))
+		return (0);
+	free((*str)->content);
+	(*str)->content = newstr;
+	(*str)->content_size += 2;
 	return (1);
 }
 
@@ -91,7 +95,7 @@ int ft_fmt_prec_d(t_list **str, char *s)
 	presist = ft_prec(s, &p);	
 	if (presist && !p && ((char*)(*str)->content)[0] == '0')
 	{
-		(*str)->content_size = 0;
+		(*str)->content_size--;
 		return (1);
 	}
 	if (p <= (*str)->content_size)
@@ -128,6 +132,29 @@ int ft_fmt_prec_s(t_list **str, char *s)
 	(*str)->content_size = size;
 	return(1);
 }
+
+int ft_fmt_prec_x(t_list **str, char *s)
+{
+	size_t p;	
+	size_t size;
+	void *newstr;
+
+	p = (*str)->content_size - 2;
+	ft_prec(s, &p);	
+	if (p <= (*str)->content_size - 2)
+		return (1);
+	((char*)(*str)->content)[1] = '0';
+	size = p + 2;
+	if (!(newstr = ft_memalloc(size)))
+		return (0);
+	ft_add_left(str, &newstr, size, '0');
+	((char*)newstr)[1] = 'X';
+	free((*str)->content);
+	(*str)->content = newstr;
+	(*str)->content_size = size;
+	return(1);
+}
+
 int ft_fmt_width_s(t_list **str, char *s)
 {
 	char sign;
@@ -152,14 +179,42 @@ int ft_fmt_width_s(t_list **str, char *s)
 	return(1);
 }
 
+int ft_fmt_width_x(t_list **str, char *s)
+{
+	size_t p;	
+	size_t size;
+	void *newstr;
+
+	p = (*str)->content_size;
+	ft_width(s, &p);	
+	if (p <= (*str)->content_size)
+		return (1);
+	((char*)(*str)->content)[1] = '0';
+	size = p;
+	if (!(newstr = ft_memalloc(size)))
+		return (0);
+	ft_add_left(str, &newstr, size, '0');
+	((char*)newstr)[1] = 'X';
+	free((*str)->content);
+	(*str)->content = newstr;
+	(*str)->content_size = size;
+	return(1);
+}
+
+
 int ft_fmt_prec(t_list **str, char *s)
 {
-	if (ft_isdigit(((char*)(*str)->content)[0]))
+	if (ft_isalnum(((char*)(*str)->content)[0]) && !ft_strchr((char*)(*str)->content, 'X'))
 	{
 		if (!(ft_fmt_prec_d(str, s)))
 			return (0);
 	}
-	else
+	else if (ft_strchr((char*)(*str)->content, 'X'))
+	{
+		if (!(ft_fmt_prec_x(str, s)))
+			return (0);
+	}
+	else 
 	{
 		if (!(ft_fmt_prec_s(str, s)))
 			return (0);	
@@ -175,6 +230,11 @@ int ft_fmt_width(t_list **str, char *s)
 	if (!ft_isdigit(((char*)(*str)->content)[0]) && ft_null(s) && !ft_prec(s, &p) && !ft_minus(s))
 	{
 		if (!(ft_fmt_width_s(str, s)))
+			return (0);
+	}
+	else if (ft_strchr((char*)(*str)->content, 'X') && ft_null(s) && !ft_prec(s, &p) && !ft_minus(s))
+	{
+		if (!(ft_fmt_width_x(str, s)))
 			return (0);
 	}
 	else
@@ -321,7 +381,7 @@ int ft_number_o(t_list **str, int n, va_list ap)
 		}
 	(*str)->content = s1;
 	(*str)->content_size = ft_strlen(s1);
-	if (!(ft_fmt_plus(str, s)) ||\
+	if (!(ft_fmt_sharp_o(str, s)) ||\
 		!(ft_fmt_prec(str, s)) ||\
 		!(ft_fmt_width(str, s)))
 		{
@@ -350,7 +410,8 @@ int ft_number_x(t_list **str, int n, va_list ap)
 		}
 	(*str)->content = s1;
 	(*str)->content_size = ft_strlen(s1);
-	if (!(ft_fmt_prec(str, s)) ||\
+	if (!(ft_fmt_sharp_x(str, s)) ||\
+		!(ft_fmt_prec(str, s)) ||\
 		!(ft_fmt_width(str, s)))
 		{
 			free(s);
