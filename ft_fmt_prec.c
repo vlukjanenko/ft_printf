@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:37:59 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/04 18:08:46 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/10 20:34:33 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,15 @@ int	ft_fmt_prec_x(t_list **str, char *s)
 	size_t	p;
 	size_t	size;
 	void	*newstr;
+	int		presist;
 
 	p = (*str)->content_size - 2;
-	ft_prec(s, &p);
+	presist = ft_prec(s, &p);
+	if (presist && !p && ((char *)(*str)->content)[2] == '0')
+	{
+		(*str)->content_size--;
+		return (1);
+	}
 	if (p <= (*str)->content_size - 2)
 		return (1);
 	((char *)(*str)->content)[1] = '0';
@@ -64,7 +70,6 @@ int	ft_fmt_prec_s(t_list **str, char *s)
 
 /*
 ** Format precision in digital string without leading signs (- + or space)
-** and without # flag
 */
 
 int	ft_fmt_prec_d(t_list **str, char *s)
@@ -77,7 +82,8 @@ int	ft_fmt_prec_d(t_list **str, char *s)
 	presist = ft_prec(s, &p);
 	if (presist && !p && ((char *)(*str)->content)[0] == '0')
 	{
-		(*str)->content_size--;
+		(*str)->content_size = ft_strchr(s, '#') && ft_strchr(s, 'o') ?\
+		(*str)->content_size : (*str)->content_size - 1;
 		return (1);
 	}
 	if (p <= (*str)->content_size)

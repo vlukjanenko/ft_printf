@@ -6,39 +6,11 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 18:11:42 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/04 19:32:54 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/05 10:24:25 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-/*
-** Handle + space flags
-*/
-
-int	ft_fmt_plus(t_list **str, char *s)
-{
-	size_t	w;
-	void	*newstr;
-	char	c;
-
-	if ((ft_plus(s) || ft_space(s)) && ft_isdigit(((char *)(*str)->content)[0]))
-	{
-		if ((w = (*str)->content_size + 1) < (*str)->content_size)
-			return (0);
-		if (!(newstr = ft_memalloc(w)))
-			return (0);
-		if (ft_plus(s))
-			c = '+';
-		else
-			c = ' ';
-		ft_add_left(str, &newstr, w, c);
-		free((*str)->content);
-		(*str)->content = newstr;
-		(*str)->content_size = w;
-	}
-	return (1);
-}
 
 /*
 ** Format string for 'd' or 'i' spec

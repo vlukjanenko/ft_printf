@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 19:09:47 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/04 19:15:50 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/10 20:41:43 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int		ft_fmt_sharp_x(t_list **str, char *s)
 {
 	void *newstr;
 
-	if (((char *)(*str)->content)[0] == '0' || !ft_sharp(s))
+	if ((((char *)(*str)->content)[0] == '0' ||\
+	!ft_sharp(s)) && !ft_strchr(s, 'p'))
 		return (1);
 	if (!(newstr = ft_strjoin("0X", (char *)(*str)->content)))
 		return (0);
@@ -61,7 +62,7 @@ int		ft_number_x(t_list **str, int n, va_list ap)
 		return (0);
 	free((*str)->content);
 	ft_shiftarg(n, ap);
-	ft_get_size_u(s, &d, ap);
+	ft_strchr(s, 'p') ? d = va_arg(ap, long int) : ft_get_size_u(s, &d, ap);
 	if (!((*str)->content = ft_itoa_base_u(d, 16)))
 	{
 		free(s);
@@ -75,7 +76,7 @@ int		ft_number_x(t_list **str, int n, va_list ap)
 		free(s);
 		return (0);
 	}
-	s[ft_strlen(s) - 1] == 'x' ? ft_fmt_lowc(str) : s;
+	ft_strchr(s, 'x') || ft_strchr(s, 'p') ? ft_fmt_lowc(str) : s;
 	free(s);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:25:53 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/03 18:01:54 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/10 20:39:46 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int		rn(unsigned long long value, int base)
 	return (rn);
 }
 
-char	*ft_itoa_base_u(unsigned long long int value, int base)
+char			*ft_itoa_base_u(unsigned long long int value, int base)
 {
 	char	*rezult;
 	int		rezult_size;

@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:34:22 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/04 19:37:34 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/10 18:58:42 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int ft_format(t_list **str, t_list *begin, va_list ap)
 			if (!(f(&begin, i, sp)))
 				return (0);
 			va_end(sp);
-			i++;
+			i = tmp == '%' ? i : i + 1;
 		}
 		begin = begin->next;
 	}

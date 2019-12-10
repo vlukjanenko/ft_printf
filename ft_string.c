@@ -6,17 +6,17 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 13:02:55 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/29 13:04:43 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/10 20:44:31 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int ft_string(t_list **str, int n, va_list ap)
+int	ft_string(t_list **str, int n, va_list ap)
 {
-	char *s;
-	char *s1;
-	size_t p;
+	char	*s;
+	char	*s1;
+	size_t	p;
 
 	if (!(s = ft_strsub((*str)->content, 1, (*str)->content_size - 1)))
 		return (0);

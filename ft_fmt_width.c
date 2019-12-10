@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:52:00 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/04 17:58:15 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/10 19:13:16 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	ft_fmt_width(t_list **str, char *s)
 	size_t p;
 
 	p = 0;
-	if (!ft_isdigit(((char *)(*str)->content)[0]) &&\
+	if (!ft_isalnum(((char *)(*str)->content)[0]) &&\
 	ft_null(s) && !ft_prec(s, &p) && !ft_minus(s))
 	{
 		if (!(ft_fmt_width_s(str, s)))

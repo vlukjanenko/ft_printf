@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 12:56:00 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/29 12:59:38 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/10 20:43:00 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,15 @@ int	ft_percent(t_list **str, int n, va_list ap)
 	ft_shiftarg(n, ap);
 	free((*str)->content);
 	if (!((*str)->content = ft_strdup("%")))
+	{
+		free(s);
 		return (0);
+	}
 	(*str)->content_size = 1;
 	if (!(ft_fmt_char(str, s)))
+	{
+		free(s);
 		return (0);
+	}
 	return (1);
 }
