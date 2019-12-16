@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:34:22 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/16 16:10:57 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/16 20:16:31 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,18 @@ int		ft_printstr(t_list *str)
 
 int		ft_format(t_list **str, t_list *begin, va_list ap)
 {
-	int		i;
 	char	tmp;
-	va_list	sp;
 	t_fun	f;
 
-	i = 0;
 	begin = *str;
 	while (begin)
 	{
 		if (((char *)begin->content)[0] == '%')
 		{
-			va_copy(sp, ap);
 			tmp = ((char *)begin->content)[begin->content_size - 1];
 			f = ft_get_f(tmp);
-			if (!(f(&begin, i, sp)))
+			if (!(f(&begin, ap)))
 				return (0);
-			va_end(sp);
-			i = tmp == '%' ? i : i + 1;
 		}
 		begin = begin->next;
 	}

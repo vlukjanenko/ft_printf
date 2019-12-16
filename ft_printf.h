@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 20:17:59 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/16 16:27:30 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/16 20:21:39 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include "libft.h"
 # include <stdarg.h>
 
-typedef int	(*t_fun)(t_list **, int, va_list);
+typedef int	(*t_fun)(t_list **, va_list);
 
 typedef union	u_type {
 	int				i;
@@ -42,15 +42,15 @@ t_fun			ft_get_f(char c);
 /*
 ** conversion functions start
 */
-int				ft_char(t_list **str, int n, va_list ap);
-int				ft_string(t_list **str, int n, va_list ap);
-int				ft_pointer(t_list **str, int n, va_list ap);
-int				ft_number(t_list **str, int n, va_list ap);
-int				ft_number_o(t_list **str, int n, va_list ap);
-int				ft_number_u(t_list **str, int n, va_list ap);
-int				ft_number_x(t_list **str, int n, va_list ap);
-int				ft_float(t_list **str, int n, va_list ap);
-int				ft_percent(t_list **str, int n, va_list ap);
+int				ft_char(t_list **str, va_list ap);
+int				ft_string(t_list **str, va_list ap);
+int				ft_pointer(t_list **str, va_list ap);
+int				ft_number(t_list **str, va_list ap);
+int				ft_number_o(t_list **str, va_list ap);
+int				ft_number_u(t_list **str, va_list ap);
+int				ft_number_x(t_list **str, va_list ap);
+int				ft_float(t_list **str, va_list ap);
+int				ft_percent(t_list **str, va_list ap);
 /*
 ** conversion functions end
 */
@@ -58,7 +58,6 @@ int				ft_compare(char *flags, char c);
 void			ft_gettab(char *(*ftab)[5], int index);
 void			ft_add_left(t_list **str, void **newstr, size_t w, char c);
 void			ft_add_right(t_list **str, void **newstr, size_t w, char c);
-void			ft_shiftarg(int n, va_list ap);
 int				ft_null(char *str);
 int				ft_space(char *str);
 int				ft_minus(char *str);

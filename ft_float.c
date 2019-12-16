@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:53:19 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/16 17:49:38 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/16 20:13:40 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_fmt_sharp_f(t_list **str, char *s)
 ** Format string for f spec
 */
 
-int	ft_float(t_list **str, int n, va_list ap)
+int	ft_float(t_list **str, va_list ap)
 {
 	char		*s;
 	long double	d;
@@ -44,7 +44,6 @@ int	ft_float(t_list **str, int n, va_list ap)
 	if (!(s = ft_strsub((*str)->content, 1, (*str)->content_size - 1)))
 		return (0);
 	free((*str)->content);
-	ft_shiftarg(n, ap);
 	ft_prec(s, &p);
 	d = ft_strchr(s, 'L') ? va_arg(ap, long double) : va_arg(ap, double);
 	(*str)->content = ft_ftoa(d, p);

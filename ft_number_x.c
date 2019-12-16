@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 19:09:47 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/10 20:41:43 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/16 20:10:39 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_fmt_lowc(t_list **str)
 ** Format string for 'x' 'X' specs
 */
 
-int		ft_number_x(t_list **str, int n, va_list ap)
+int		ft_number_x(t_list **str, va_list ap)
 {
 	char					*s;
 	unsigned long long int	d;
@@ -61,7 +61,6 @@ int		ft_number_x(t_list **str, int n, va_list ap)
 	if (!(s = ft_strsub((*str)->content, 1, (*str)->content_size - 1)))
 		return (0);
 	free((*str)->content);
-	ft_shiftarg(n, ap);
 	ft_strchr(s, 'p') ? d = va_arg(ap, long int) : ft_get_size_u(s, &d, ap);
 	if (!((*str)->content = ft_itoa_base_u(d, 16)))
 	{
