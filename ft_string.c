@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 13:02:55 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/10 20:44:31 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/11 09:34:56 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,16 @@ int	ft_string(t_list **str, int n, va_list ap)
 	free((*str)->content);
 	ft_shiftarg(n, ap);
 	if (!(s1 = (va_arg(ap, char *))))
-	{
-		if (!((*str)->content = ft_strdup("(null)")))
-			return (0);
-		(*str)->content_size = 6;
-		return (1);
-	}
+		s1 = "(null)";
 	p = ft_strlen(s1);
 	ft_prec(s, &p);
 	p = p > ft_strlen(s1) ? ft_strlen(s1) : p;
-	if (!((*str)->content = ft_strsub(s1, 0, p)))
-		return (0);
 	(*str)->content_size = p;
-	if (!(ft_fmt_char(str, s)))
-		return (0);
-	return (1);
+	if (((*str)->content = ft_strsub(s1, 0, p)) && ft_fmt_char(str, s))
+	{
+		free(s);
+		return (1);
+	}
+	free(s);
+	return (0);
 }

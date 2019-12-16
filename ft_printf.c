@@ -6,14 +6,14 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:34:22 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/10 18:58:42 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/16 16:10:57 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
 
-void ft_cleanup(void *content, size_t content_size)
+void	ft_cleanup(void *content, size_t content_size)
 {
 	if (content)
 	{
@@ -22,34 +22,28 @@ void ft_cleanup(void *content, size_t content_size)
 	}
 }
 
-int ft_printstr(t_list *str)
+int		ft_printstr(t_list *str)
 {
-	size_t i;
 	int n;
 
 	if (!str)
 		return (0);
-	i = 0;
 	n = 0;
 	while (str)
 	{
-		while (i < str->content_size)
-		{
-			ft_putchar(((char *)str->content)[i]); //заменить на врайт посмотреть как на скорость повлияет
-			i++;
-			n++;
-		}
-		i = 0;
+		write(1, (char *)str->content, str->content_size);
+		n = n + str->content_size;
 		str = str->next;
 	}
 	return (n);
 }
-int ft_format(t_list **str, t_list *begin, va_list ap)
+
+int		ft_format(t_list **str, t_list *begin, va_list ap)
 {
-	int i;
-	char tmp;
-	va_list sp;
-	t_fun f;
+	int		i;
+	char	tmp;
+	va_list	sp;
+	t_fun	f;
 
 	i = 0;
 	begin = *str;
@@ -69,24 +63,25 @@ int ft_format(t_list **str, t_list *begin, va_list ap)
 	}
 	return (1);
 }
-int ft_printf(const char *restrict format, ...)
+
+int		ft_printf(const char *restrict format, ...)
 {
-	t_list *str;
+	t_list	*str;
 	va_list ap;
-	void (*del)(void *, size_t);
-	int n;
+	void	(*del)(void *, size_t);
+	int		n;
 
 	del = &ft_cleanup;
 	str = 0;
-	if (ft_readformat(&str, (char *)format) == -1) //получили спискок строк вида строка строка формат строка и т.д.
+	if (ft_readformat(&str, (char *)format) == -1)
 	{
-	str ? ft_lstdel(&str, del) : str;
+		str ? ft_lstdel(&str, del) : str;
 		return (0);
 	}
 	va_start(ap, format);
-	if (ft_format(&str, 0, ap) == 0) //получили спискок строк вида строка строка формат строка и т.д.
+	if (ft_format(&str, 0, ap) == 0)
 	{
-	str ? ft_lstdel(&str, del) : str;
+		str ? ft_lstdel(&str, del) : str;
 		return (0);
 	}
 	va_end(ap);

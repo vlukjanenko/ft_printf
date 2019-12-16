@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:52:00 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/10 19:13:16 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/11 13:13:24 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_fmt_width_d(t_list **str, char *s)
 		return (0);
 	if (ft_minus(s))
 		ft_add_right(str, &newstr, w, ' ');
-	else if (ft_null(s) && !ft_prec(s, &p))
+	else if ((ft_null(s) && !ft_prec(s, &p)) || (ft_null(s) && ft_strchr(s, 'f')))
 		ft_add_left(str, &newstr, w, '0');
 	else
 		ft_add_left(str, &newstr, w, ' ');
@@ -104,8 +104,9 @@ int	ft_fmt_width(t_list **str, char *s)
 	size_t p;
 
 	p = 0;
-	if (!ft_isalnum(((char *)(*str)->content)[0]) &&\
-	ft_null(s) && !ft_prec(s, &p) && !ft_minus(s))
+	if ((!ft_isalnum(((char *)(*str)->content)[0]) &&\
+	ft_null(s) && !ft_prec(s, &p) && !ft_minus(s)) || (!ft_isalnum(((char *)(*str)->content)[0]) && ft_strchr(s, 'f') &&\
+	ft_null(s) && !ft_minus(s)))
 	{
 		if (!(ft_fmt_width_s(str, s)))
 			return (0);

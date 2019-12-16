@@ -6,12 +6,11 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:42:20 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/16 10:58:46 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/16 15:57:07 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h> //test
 
 char	*ft_str_combain(char *entire, char *bufer, char *sign, int p)
 {
@@ -37,6 +36,7 @@ char	*ft_str_combain(char *entire, char *bufer, char *sign, int p)
 void	ft_to_string(char (*bufer)[70], int n)
 {
 	int i;
+
 	n > 70 ? n = 70 : n;
 	i = 0;
 	while (i < n)
@@ -49,24 +49,8 @@ void	ft_to_string(char (*bufer)[70], int n)
 int		ft_round(char (*bufer)[70], int p)
 {
 	int hd;
-	int i;
-	int tmp;
 
-	p > 69 ? p = 69 : p;
-	i = 69;
-	hd = 0;
-	while (i > 22 || hd)
-	{
-		if (!hd)
-			hd = (*bufer)[i] < 5 ? 0 : 1;
-		tmp = hd;
-		hd = ((*bufer)[i - 1] + hd) / 10;
-		(*bufer)[i - 1] = ((*bufer)[i - 1] + tmp) % 10;
-		i--;
-	}
-	if (!hd)
-		hd = (*bufer)[p] < 5 ? 0 : 1;
-	
+	hd = (*bufer)[p] < 5 ? 0 : 1;
 	(*bufer)[p] = 0;
 	while (hd == 1 && p > 0)
 	{
@@ -79,22 +63,20 @@ int		ft_round(char (*bufer)[70], int p)
 
 int		ft_fract(char (*bufer)[70], long double n, int p)
 {
-	int		i;
-	int		hd;
-	unsigned long long tmp;
+	int					i;
+	int					hd;
+	unsigned long long	tmp;
+	long double			m;
 
+	m = n;
 	hd = 0;
 	i = 0;
-	tmp = 10;			
+	tmp = 10;
 	while (n > 0 && i < 70)
-		{
-	//	printf("%.100Lf\n", n); 1st
-		n = 2 * n;
-		n = 5 * n;
-	//	printf("%.100Lf\n", (n * tmp)); // 1st
-	//	(*bufer)[i] = (unsigned long long)(n * tmp) % 10; //1st
-		(*bufer)[i] = (char)n;
-	//	tmp *= 10; //1 st
+	{
+		n = 10 * n;
+		(*bufer)[i] = i < 19 ? (unsigned long long)(m * tmp) % 10 : (char)(n);
+		i < 19 ? tmp *= 10 : i;
 		n = (n - (char)n);
 		i++;
 	}

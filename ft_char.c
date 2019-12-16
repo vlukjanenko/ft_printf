@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 12:48:12 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/10 20:43:42 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/11 09:38:04 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ int	ft_char(t_list **str, int n, va_list ap)
 		free(s);
 		return (0);
 	}
+	free(s);
 	return (1);
 }

@@ -6,11 +6,29 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:53:19 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/10 20:38:30 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/12 10:21:54 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+/*
+** Handling # flag
+*/
+
+int		ft_fmt_sharp_f(t_list **str, char *s)
+{
+	void *newstr;
+
+	if(!(ft_sharp(s)) || ft_strchr((*str)->content, '.'))
+		return (1);
+	if (!(newstr = ft_strjoin((char *)(*str)->content, ".")))
+		return (0);
+	free((*str)->content);
+	(*str)->content = newstr;
+	(*str)->content_size += 1;
+	return (1);
+}
 
 /*
 ** Format string for f spec
@@ -35,7 +53,8 @@ int	ft_float(t_list **str, int n, va_list ap)
 		return (0);
 	}
 	(*str)->content_size = ft_strlen((*str)->content);
-	if (!(ft_fmt_plus(str, s)) ||
+	if (!(ft_fmt_sharp_f(str, s)) ||
+		!(ft_fmt_plus(str, s)) ||
 		!(ft_fmt_width(str, s)))
 	{
 		free(s);

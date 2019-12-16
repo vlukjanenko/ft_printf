@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 12:56:00 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/10 20:43:00 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/11 09:07:31 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ int	ft_percent(t_list **str, int n, va_list ap)
 		free(s);
 		return (0);
 	}
+	free(s);
 	return (1);
 }

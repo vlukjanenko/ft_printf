@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:37:59 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/10 20:34:33 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/11 11:31:55 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,11 @@ int	ft_fmt_prec_s(t_list **str, char *s)
 
 	sign = ((char *)(*str)->content)[0];
 	p = (*str)->content_size - 1;
-	ft_prec(s, &p);
+	if (ft_prec(s, &p) && !p && ((char *)(*str)->content)[1] == '0')
+	{
+		(*str)->content_size--;
+		return (1);
+	}
 	if (p <= (*str)->content_size - 1)
 		return (1);
 	((char *)(*str)->content)[0] = '0';
