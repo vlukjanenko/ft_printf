@@ -6,7 +6,7 @@
 #    By: majosue <majosue@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/13 10:14:46 by majosue           #+#    #+#              #
-#    Updated: 2019/12/17 14:20:56 by majosue          ###   ########.fr        #
+#    Updated: 2019/12/17 14:30:04 by majosue          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,8 @@ all: $(NAME)
 $(NAME): $(OBJECTS) $(LIBFT)
 	@rm -f $(NAME)
 	$(MAKERLIB) $(NAME) $(OBJECTS)
-	ranlib $(NAME)
 	libtool -static -o $(NAME) $(NAME) $(LIBFT)
+	ranlib $(NAME)
 
 $(LIBFT): libft/*.c libft/*.h
 	@make -C libft/
