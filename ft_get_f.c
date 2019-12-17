@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 17:51:47 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/10 20:35:50 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/17 13:05:32 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ t_fun	ft_get_f(char c)
 	ftab[7] = &ft_number_x;
 	ftab[8] = &ft_number_x;
 	ftab[9] = &ft_float;
-	ftab[10] = &ft_percent;
+	ftab[10] = &ft_char;
 	return (ftab[i]);
 }

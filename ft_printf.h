@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 20:17:59 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/16 20:21:39 by majosue          ###   ########.fr       */
+/*   Updated: 2019/12/17 13:05:58 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int				ft_number_o(t_list **str, va_list ap);
 int				ft_number_u(t_list **str, va_list ap);
 int				ft_number_x(t_list **str, va_list ap);
 int				ft_float(t_list **str, va_list ap);
-int				ft_percent(t_list **str, va_list ap);
 /*
 ** conversion functions end
 */
