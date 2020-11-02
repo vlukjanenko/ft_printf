@@ -6,37 +6,37 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:37:59 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/11 11:31:55 by majosue          ###   ########.fr       */
+/*   Updated: 2020/11/02 06:42:04 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_fmt_prec_x(t_list **str, char *s)
+int	ft_fmt_prec_x(t_fmt *chain)
 {
 	size_t	p;
 	size_t	size;
 	void	*newstr;
 	int		presist;
 
-	p = (*str)->content_size - 2;
-	presist = ft_prec(s, &p);
-	if (presist && !p && ((char *)(*str)->content)[2] == '0')
+	p = chain->len - 2;
+	presist = ft_prec(chain, &p);
+	if (presist && !p && chain->str[2] == '0')
 	{
-		(*str)->content_size--;
+		chain->len--;
 		return (1);
 	}
-	if (p <= (*str)->content_size - 2)
+	if (p <= chain->len - 2)
 		return (1);
-	((char *)(*str)->content)[1] = '0';
+	chain->str[1] = '0';
 	size = p + 2;
-	if (!(newstr = ft_memalloc(size)))
+	if (!(newstr = ft_strnew(size)))
 		return (0);
-	ft_add_left(str, &newstr, size, '0');
+	ft_add_left(chain, &newstr, size, '0');
 	((char *)newstr)[1] = 'X';
-	free((*str)->content);
-	(*str)->content = newstr;
-	(*str)->content_size = size;
+	free(chain->str);
+	chain->str = newstr;
+	chain->len = size;
 	return (1);
 }
 
@@ -44,31 +44,31 @@ int	ft_fmt_prec_x(t_list **str, char *s)
 ** Format presision string with leading symbols + - space
 */
 
-int	ft_fmt_prec_s(t_list **str, char *s)
+int	ft_fmt_prec_s(t_fmt *chain)
 {
 	char	sign;
 	size_t	p;
 	size_t	size;
 	void	*newstr;
 
-	sign = ((char *)(*str)->content)[0];
-	p = (*str)->content_size - 1;
-	if (ft_prec(s, &p) && !p && ((char *)(*str)->content)[1] == '0')
+	sign = chain->str[0];
+	p = chain->len - 1;
+	if (ft_prec(chain, &p) && !p && chain->str[1] == '0')
 	{
-		(*str)->content_size--;
+		chain->len--;
 		return (1);
 	}
-	if (p <= (*str)->content_size - 1)
+	if (p <= chain->len - 1)
 		return (1);
-	((char *)(*str)->content)[0] = '0';
+	chain->str[0] = '0';
 	size = p + 1;
-	if (!(newstr = ft_memalloc(size)))
+	if (!(newstr = ft_strnew(size)))
 		return (0);
-	ft_add_left(str, &newstr, size, '0');
+	ft_add_left(chain, &newstr, size, '0');
 	((char *)newstr)[0] = sign;
-	free((*str)->content);
-	(*str)->content = newstr;
-	(*str)->content_size = size;
+	free(chain->str);
+	chain->str = newstr;
+	chain->len = size;
 	return (1);
 }
 
@@ -76,28 +76,28 @@ int	ft_fmt_prec_s(t_list **str, char *s)
 ** Format precision in digital string without leading signs (- + or space)
 */
 
-int	ft_fmt_prec_d(t_list **str, char *s)
+int	ft_fmt_prec_d(t_fmt *chain)
 {
 	size_t	p;
 	int		presist;
 	void	*newstr;
 
-	p = (*str)->content_size;
-	presist = ft_prec(s, &p);
-	if (presist && !p && ((char *)(*str)->content)[0] == '0')
+	p = chain->len;
+	presist = ft_prec(chain, &p);
+	if (presist && !p && chain->str[0] == '0')
 	{
-		(*str)->content_size = ft_strchr(s, '#') && ft_strchr(s, 'o') ?\
-		(*str)->content_size : (*str)->content_size - 1;
+		chain->len = chain->shrp && chain->modi == 'o' ?\
+		chain->len : chain->len - 1;
 		return (1);
 	}
-	if (p <= (*str)->content_size)
+	if (p <= chain->len)
 		return (1);
-	if (!(newstr = ft_memalloc(p)))
+	if (!(newstr = ft_strnew(p)))
 		return (0);
-	ft_add_left(str, &newstr, p, '0');
-	free((*str)->content);
-	(*str)->content = newstr;
-	(*str)->content_size = p;
+	ft_add_left(chain, &newstr, p, '0');
+	free(chain->str);
+	chain->str = newstr;
+	chain->len = p;
 	return (1);
 }
 
@@ -105,22 +105,22 @@ int	ft_fmt_prec_d(t_list **str, char *s)
 ** Function chooser
 */
 
-int	ft_fmt_prec(t_list **str, char *s)
+int	ft_fmt_prec(t_fmt *chain)
 {
-	if (ft_isalnum(((char *)(*str)->content)[0]) &&\
-	!ft_strchr((char *)(*str)->content, 'X'))
+	if (ft_isalnum(chain->str[0]) &&\
+	chain->modi != 'X')
 	{
-		if (!(ft_fmt_prec_d(str, s)))
+		if (!(ft_fmt_prec_d(chain)))
 			return (0);
 	}
-	else if (ft_strchr((char *)(*str)->content, 'X'))
+	else if (chain->modi == 'X')
 	{
-		if (!(ft_fmt_prec_x(str, s)))
+		if (!(ft_fmt_prec_x(chain)))
 			return (0);
 	}
 	else
 	{
-		if (!(ft_fmt_prec_s(str, s)))
+		if (!(ft_fmt_prec_s(chain)))
 			return (0);
 	}
 	return (1);

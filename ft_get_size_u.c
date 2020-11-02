@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 16:03:21 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/10 18:29:35 by majosue          ###   ########.fr       */
+/*   Updated: 2020/11/02 03:37:44 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,38 +20,35 @@ void	ft_get_size_u_part2(char *str, unsigned long long int *d, va_list ap)
 {
 	t_type_u tmp;
 
-	if (str[0] == 'h' && str[1] != 'h')
+	if (ft_strequ(str, "h"))
 	{
 		tmp.si = va_arg(ap, unsigned int);
 		*d = tmp.si;
 	}
-	if (str[0] == 'l' && str[1] != 'l')
+	if (ft_strequ(str, "l"))
 	{
 		tmp.li = va_arg(ap, unsigned long int);
 		*d = tmp.li;
 	}
-	if (str[0] != 'l' && str[0] != 'h' && str[0] != 'L')
-	{
-		tmp.i = va_arg(ap, unsigned int);
-		*d = tmp.i;
-	}
+
 }
 
 void	ft_get_size_u(char *str, unsigned long long int *d, va_list ap)
 {
-	char		*s[5];
+
 	t_type_u	tmp;
 
-	ft_gettab(&s, 5);
-	s[3] = "";
-	s[4] = "";
-	ft_chkflags(&str, s);
-	if (str[0] == 'l' && str[1] == 'l')
+	if (!str)
+	{
+		tmp.i = va_arg(ap, unsigned int);
+		*d = tmp.i;
+	}
+	else if (ft_strequ(str, "ll"))
 	{
 		tmp.lli = va_arg(ap, unsigned long long int);
 		*d = tmp.lli;
 	}
-	if (str[0] == 'h' && str[1] == 'h')
+	else if (ft_strequ(str,"hh"))
 	{
 		tmp.c = va_arg(ap, unsigned int);
 		*d = tmp.c;

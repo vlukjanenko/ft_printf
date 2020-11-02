@@ -6,13 +6,13 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 18:02:01 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/02 19:59:44 by majosue          ###   ########.fr       */
+/*   Updated: 2020/11/02 06:45:51 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_compare(char *flags, char c)
+/* int	ft_compare(char *flags, char c)
 {
 	while (*flags)
 	{
@@ -21,9 +21,9 @@ int	ft_compare(char *flags, char c)
 		flags++;
 	}
 	return (0);
-}
+} */
 
-int	ft_chklen(char *ptr1, char *ptr2)
+/* int	ft_chklen(char *ptr1, char *ptr2)
 {
 	int n;
 
@@ -36,8 +36,8 @@ int	ft_chklen(char *ptr1, char *ptr2)
 		return (2);
 	return (0);
 }
-
-int	ft_chkdoubledot(char *ptr1, char *ptr2)
+ */
+/* int	ft_chkdoubledot(char *ptr1, char *ptr2)
 {
 	int n;
 
@@ -55,31 +55,128 @@ int	ft_chkdoubledot(char *ptr1, char *ptr2)
 	if (n == 0)
 		return (-1);
 	return (1);
+} */
+
+int char_is_in_flags(char c, t_fmt *chain)
+{
+	if (c == '0')
+		chain->zero = 1;
+	else if (c == '#')
+		chain->shrp = 1;
+	else if (c == ' ')
+		chain->spce = 1;
+	else if (c == '-')
+		chain->mins = 1;
+	else if (c == '+')
+		chain->plus = 1;
+	else
+		return (0);
+	return (1);
 }
 
-int	ft_chkflags(char **str, char *ftab[5])
+void ft_set_w(char **str, t_fmt *chain, va_list(ap))
 {
-	char *begin;
+	if (*(*str) == '*')
+		{
+			chain->widt[0] = 1;
+			chain->widt[1] = va_arg(ap, int);
+			(*str)++;
+		}
+	else if (ft_isdigit(*(*str)))
+		{
+			chain->widt[0] = 1;
+			chain->widt[1] = ft_atoi(*str);
+			while (ft_isdigit(*(*str)))
+				(*str)++;
+		}
+}
 
-	begin = *str;
-	while (*(*str) && ft_compare(ftab[0], *(*str)))
-		(*str)++;
-	while (*(*str) && ft_compare(ftab[1], *(*str)))
-		(*str)++;
-	begin = *str;
-	while (*(*str) && ft_compare(ftab[2], *(*str)))
-		(*str)++;
-	if (!(ft_chkdoubledot(begin, *str)))
+void ft_set_p(char **str, t_fmt *chain, va_list(ap))
+{
+	if (*(*str) == '*')
+		{
+			chain->prec[0] = 1;
+			chain->prec[1] = va_arg(ap, int);
+			(*str)++;
+		}
+	else if (ft_isdigit(*(*str)))
+		{
+			chain->prec[0] = 1;
+			chain->prec[1] = ft_atoi(*str);
+			while (ft_isdigit(*(*str)))
+				(*str)++;
+		}
+}
+
+void	ft_set_arg_size(char **str, t_fmt *chain)
+{
+	if (ft_strnequ(*str, "hh", 2))
+	{
+		chain->arg_size = ft_strdup("hh");
+		(*str) += 2;
+	}
+	else if (ft_strnequ(*str, "ll", 2))
+	{
+		chain->arg_size = ft_strdup("l");
+		(*str) += 2;
+	}
+	else if (ft_strnequ(*str, "l", 1))
+	{
+		chain->arg_size = ft_strdup("l");
+		(*str) += 1;
+	}
+	else if (ft_strnequ(*str, "h", 1))
+	{
+		chain->arg_size = ft_strdup("h");
+		(*str) += 1;
+	}
+	else if (ft_strnequ(*str, "L", 1))
+	{
+		chain->arg_size = ft_strdup("L");
+	}
+}
+
+int		ft_set_mod(char **str, t_fmt *chain)
+{
+	if (*(*str) == 'd')
+		chain->modi = 'd';
+	else if (*(*str) == 'i')
+		chain->modi = 'i';
+	else if (*(*str) == 'o')
+		chain->modi = 'o';
+	else if (*(*str) == 'u')
+		chain->modi = 'u';
+	else if (*(*str) == 'x')
+	{
+		chain->modi = 'X';
+		chain->x = 'x';
+	}
+	else if (*(*str) == 'X')
+		chain->modi = 'X';
+	else if (*(*str) == '%')
+		chain->modi = '%';
+	else if (*(*str) == 'c')
+		chain->modi = 'c';
+	else if (*(*str) == 'p')
+		chain->modi = 'p';
+	else if (*(*str) == 's')
+		chain->modi = 's';
+	else
 		return (0);
-	begin = *str;
-	while (*(*str) && ft_compare(ftab[3], *(*str)))
+	(*str)++;
+	return (1);
+}
+
+int	ft_chkflags(char **str, t_fmt *chain, va_list ap)
+{
+	while (char_is_in_flags(*(*str), chain))
 		(*str)++;
-	if (!(ft_chklen(begin, *str)))
-		return (0);
-	if (ft_compare(ftab[4], *(*str)))
+	ft_set_w(str, chain, ap);
+	if (*(*str) == '.')
 	{
 		(*str)++;
-		return (1);
+		ft_set_p(str, chain, ap);
 	}
-	return (0);
+	ft_set_arg_size(str, chain);
+	return (ft_set_mod(str, chain));
 }

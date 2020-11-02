@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:10:10 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/27 17:53:43 by majosue          ###   ########.fr       */
+/*   Updated: 2020/11/02 00:28:49 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,46 +14,57 @@
 
 int	ft_save_before_ptr(t_list **str, char **ptr, char **format)
 {
+	t_fmt	chain;
+	ft_bzero(&chain, sizeof(chain));
+
 	if (*ptr == *format)
 		return (0);
-	if (!(ft_lstp2back(str, *format, *ptr - *format)))
+	chain.str = *format;
+	chain.len = *ptr - *format;
+	if (!(ft_lstp2back(str, &chain, sizeof(chain))))
 		return (-1);
 	*format = *ptr;
 	return (1);
 }
 
-int	ft_save_after_ptr(t_list **str, char **ptr, char **format)
+int	ft_save_after_ptr(t_list **str, char **ptr, char **format, va_list ap)
 {
-	char *ftab[5];
+	t_fmt	chain;
+	t_fun	f;
 
-	ft_gettab(&ftab, 5);
 	(*ptr)++;
-	if (!ft_chkflags(ptr, ftab))
+	if (!ft_chkflags(ptr, &chain, ap))
 	{
 		*format = *ptr;
 		return (1);
 	}
-	if (!(ft_lstp2back(str, *format, *ptr - *format)))
+	f = ft_get_f(chain.modi);
+	f(&chain, ap);
+	if (!(ft_lstp2back(str, &chain, sizeof(chain))))
 		return (-1);
 	*format = *ptr;
 	return (1);
 }
 
-int	ft_readformat(t_list **str, char *format)
+int	ft_readformat(t_list **str, char *format, va_list ap)
 {
 	char *ptr;
+	t_fmt chain;
 
+	ft_bzero(&chain, sizeof chain);
 	if (!*format)
 		return (0);
 	if ((ptr = ft_strchr(format, '%')))
 	{
 		if ((ft_save_before_ptr(str, &ptr, &format)) == -1)
 			return (-1);
-		if (ft_save_after_ptr(str, &ptr, &format) == -1)
+		if (ft_save_after_ptr(str, &ptr, &format, ap) == -1)
 			return (-1);
-		return (ft_readformat(str, format));
+		return (ft_readformat(str, format, ap));
 	}
-	if (!(ft_lstp2back(str, format, ft_strlen(format))))
+	chain.str = format;
+	chain.len = ft_strlen(format);
+	if (!(ft_lstp2back(str, &chain, sizeof(chain))))
 		return (-1);
 	return (1);
 }

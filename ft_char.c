@@ -6,33 +6,24 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 12:48:12 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/17 13:05:13 by majosue          ###   ########.fr       */
+/*   Updated: 2020/11/01 23:15:07 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_char(t_list **str, va_list ap)
+int	ft_char(t_fmt *chain, va_list ap)
 {
-	char	*s;
 	int		s1;
 
-	if (!(s = ft_strsub((*str)->content, 1, (*str)->content_size - 1)))
-		return (0);
-	free((*str)->content);
-	s1 = s[(*str)->content_size - 2] == '%' ? '%' : (va_arg(ap, int));
-	if (!((*str)->content = ft_strnew(1)))
+	s1 = chain->modi == '%' ? '%' : (va_arg(ap, int));
+	if (!(chain->str = ft_strnew(1)))
+		exit (0);
+	chain->str[0] = (char)s1;
+	chain->len = 1;
+	if (!(ft_fmt_char(chain)))
 	{
-		free(s);
 		return (0);
 	}
-	((char *)(*str)->content)[0] = (char)s1;
-	(*str)->content_size = 1;
-	if (!(ft_fmt_char(str, s)))
-	{
-		free(s);
-		return (0);
-	}
-	free(s);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 20:17:59 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/17 13:05:58 by majosue          ###   ########.fr       */
+/*   Updated: 2020/11/02 06:45:12 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 # include "libft.h"
 # include <stdarg.h>
 
-typedef int	(*t_fun)(t_list **, va_list);
 
 typedef union	u_type {
 	int				i;
@@ -33,41 +32,60 @@ typedef union	u_type_u {
 	unsigned long long int	lli;
 }				t_type_u;
 
+typedef struct	s_fmt
+{
+	int			is_f;
+	char 		*str;
+	char		*arg_size;
+	char		modi;
+	char		x;
+	size_t		len;
+	int			shrp;
+	int			zero;
+	int			mins;
+	int			plus;
+	int			spce;
+	size_t		widt[2];
+	size_t		prec[2];
+	int			fd;
+}				t_fmt;
+
+typedef int		(*t_fun)(t_fmt *, va_list);
 int				ft_printf(const char *restrict format, ...);
-int				ft_chkflags(char **str, char *ftab[5]);
-int				ft_lstp2back(t_list **begin_list, void const *content,\
+int				ft_chkflags(char **str, t_fmt *chain, va_list ap);
+t_list			*ft_lstp2back(t_list **begin_list, void const *content,\
 size_t content_size);
-int				ft_readformat(t_list **str, char *format);
+int				ft_readformat(t_list **str, char *format, va_list ap);
 t_fun			ft_get_f(char c);
 /*
 ** conversion functions start
 */
-int				ft_char(t_list **str, va_list ap);
-int				ft_string(t_list **str, va_list ap);
-int				ft_pointer(t_list **str, va_list ap);
-int				ft_number(t_list **str, va_list ap);
-int				ft_number_o(t_list **str, va_list ap);
-int				ft_number_u(t_list **str, va_list ap);
-int				ft_number_x(t_list **str, va_list ap);
-int				ft_float(t_list **str, va_list ap);
+int				ft_char(t_fmt *chain, va_list ap);
+int				ft_string(t_fmt *chain, va_list ap);
+int				ft_pointer(t_fmt *chain, va_list ap);
+int				ft_number(t_fmt *chain, va_list ap);
+int				ft_number_o(t_fmt *chain, va_list ap);
+int				ft_number_u(t_fmt *chain, va_list ap);
+int				ft_number_x(t_fmt *chain, va_list ap);
+int				ft_float(t_fmt *chain, va_list ap);
 /*
 ** conversion functions end
 */
 int				ft_compare(char *flags, char c);
 void			ft_gettab(char *(*ftab)[5], int index);
-void			ft_add_left(t_list **str, void **newstr, size_t w, char c);
-void			ft_add_right(t_list **str, void **newstr, size_t w, char c);
+void			ft_add_left(t_fmt *chain, void **newstr, size_t w, char c);
+void			ft_add_right(t_fmt *chain, void **newstr, size_t w, char c);
 int				ft_null(char *str);
 int				ft_space(char *str);
 int				ft_minus(char *str);
 int				ft_plus(char *str);
 int				ft_skipflags(char **str);
-int				ft_width(char *str, size_t *w);
-int				ft_prec(char *str, size_t *p);
-int				ft_fmt_char(t_list **str, char *s);
-int				ft_fmt_plus(t_list **str, char *s);
-int				ft_fmt_width(t_list **str, char *s);
-int				ft_fmt_prec(t_list **str, char *s);
+int				ft_width(t_fmt *chain, size_t *w);
+int				ft_prec(t_fmt *chain, size_t *p);
+int				ft_fmt_char(t_fmt *chain);
+int				ft_fmt_plus(t_fmt *chain);
+int				ft_fmt_width(t_fmt *chain);
+int				ft_fmt_prec(t_fmt *chain);
 char			*ft_itoa_base(long long int value, int base);
 char			*ft_itoa_base_u(unsigned long long int value, int base);
 char			*ft_ftoa(long double n, int p);
