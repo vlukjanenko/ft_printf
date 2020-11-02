@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:10:10 by majosue           #+#    #+#             */
-/*   Updated: 2020/11/02 00:28:49 by majosue          ###   ########.fr       */
+/*   Updated: 2020/11/02 21:09:43 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	ft_save_after_ptr(t_list **str, char **ptr, char **format, va_list ap)
 	t_fmt	chain;
 	t_fun	f;
 
+	ft_bzero(&chain, sizeof(chain));
 	(*ptr)++;
 	if (!ft_chkflags(ptr, &chain, ap))
 	{

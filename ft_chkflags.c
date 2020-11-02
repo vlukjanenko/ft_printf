@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 18:02:01 by majosue           #+#    #+#             */
-/*   Updated: 2020/11/02 06:45:51 by majosue          ###   ########.fr       */
+/*   Updated: 2020/11/02 22:38:31 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,19 @@ int char_is_in_flags(char c, t_fmt *chain)
 
 void ft_set_w(char **str, t_fmt *chain, va_list(ap))
 {
+	int tmp;
+
 	if (*(*str) == '*')
 		{
 			chain->widt[0] = 1;
-			chain->widt[1] = va_arg(ap, int);
+			tmp = va_arg(ap, int);
+			if (tmp < 0)
+			{
+				chain->widt[1] = -tmp;
+				chain->mins = 1;
+			}
+			else
+				chain->widt[1] = tmp;
 			(*str)++;
 		}
 	else if (ft_isdigit(*(*str)))
@@ -93,10 +102,20 @@ void ft_set_w(char **str, t_fmt *chain, va_list(ap))
 
 void ft_set_p(char **str, t_fmt *chain, va_list(ap))
 {
+	int tmp;
+
+	chain->prec[0] = 1;
+	chain->prec[1] = 0;
 	if (*(*str) == '*')
 		{
 			chain->prec[0] = 1;
-			chain->prec[1] = va_arg(ap, int);
+			tmp = va_arg(ap, int);
+			if (tmp < 0)
+				chain->prec[0] = 0;
+			else
+				{
+					chain->prec[1] = tmp;
+				}
 			(*str)++;
 		}
 	else if (ft_isdigit(*(*str)))
@@ -133,6 +152,7 @@ void	ft_set_arg_size(char **str, t_fmt *chain)
 	else if (ft_strnequ(*str, "L", 1))
 	{
 		chain->arg_size = ft_strdup("L");
+		(*str) += 1;
 	}
 }
 
@@ -161,6 +181,8 @@ int		ft_set_mod(char **str, t_fmt *chain)
 		chain->modi = 'p';
 	else if (*(*str) == 's')
 		chain->modi = 's';
+	else if (*(*str) == 'f')
+		chain->modi = 'f';
 	else
 		return (0);
 	(*str)++;
@@ -171,7 +193,8 @@ int	ft_chkflags(char **str, t_fmt *chain, va_list ap)
 {
 	while (char_is_in_flags(*(*str), chain))
 		(*str)++;
-	ft_set_w(str, chain, ap);
+	while (*(*str) == '*' || ft_isdigit(*(*str)))
+		ft_set_w(str, chain, ap);
 	if (*(*str) == '.')
 	{
 		(*str)++;

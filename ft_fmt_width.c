@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:52:00 by majosue           #+#    #+#             */
-/*   Updated: 2020/11/02 07:07:55 by majosue          ###   ########.fr       */
+/*   Updated: 2020/11/02 20:23:34 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,8 @@ int	ft_fmt_width(t_fmt *chain)
 		if (!(ft_fmt_width_s(chain)))
 			return (0);
 	}
-	else if (chain->modi == 'X' &&\
-	chain->zero && !ft_prec(chain, &p) && chain->mins = 0)
+	else if (ft_strchr(chain->str, 'X') &&\
+	chain->zero && !ft_prec(chain, &p) && chain->mins == 0)
 	{
 		if (!(ft_fmt_width_x(chain)))
 			return (0);

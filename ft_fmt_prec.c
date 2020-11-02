@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:37:59 by majosue           #+#    #+#             */
-/*   Updated: 2020/11/02 06:42:04 by majosue          ###   ########.fr       */
+/*   Updated: 2020/11/02 21:48:03 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,12 @@ int	ft_fmt_prec_d(t_fmt *chain)
 int	ft_fmt_prec(t_fmt *chain)
 {
 	if (ft_isalnum(chain->str[0]) &&\
-	chain->modi != 'X')
+	!ft_strchr(chain->str, 'X'))
 	{
 		if (!(ft_fmt_prec_d(chain)))
 			return (0);
 	}
-	else if (chain->modi == 'X')
+	else if (ft_strchr(chain->str, 'X'))
 	{
 		if (!(ft_fmt_prec_x(chain)))
 			return (0);
