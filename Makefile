@@ -6,7 +6,7 @@
 #    By: majosue <majosue@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/13 10:14:46 by majosue           #+#    #+#              #
-#    Updated: 2020/11/04 01:04:30 by majosue          ###   ########.fr        #
+#    Updated: 2020/11/04 01:20:43 by majosue          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ libft/ft_strcpy.c\
 libft/ft_strncpy.c\
 libft/ft_putendl_fd.c\
 libft/ft_putchar_fd.c\
-libft/ft_strncat.c
+libft/ft_memcpy.c
 
 OBJECTS = $(SOURCES:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:34:22 by majosue           #+#    #+#             */
-/*   Updated: 2020/11/04 01:12:04 by majosue          ###   ########.fr       */
+/*   Updated: 2020/11/04 01:47:36 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_cleanup(void *content, size_t content_size)
 void	ft_printstr(char *str, size_t len, int *n)
 {
 	static size_t	s_n = 0;
-	static char buffer[BUFSIZE + 1] = {0,};
+	static char		buffer[BUFSIZE + 1] = {0};
 
 	if (len == 0 || s_n + len > BUFSIZE)
 	{
@@ -51,13 +51,14 @@ void	ft_printstr(char *str, size_t len, int *n)
 	}
 	while (len > BUFSIZE)
 	{
-		write(1, str, len);
-		str += len;
+		write(1, str, BUFSIZE);
+		str += BUFSIZE;
+		len -= BUFSIZE;
 		*n += len;
 	}
 	if (str)
 	{
-		ft_strncat(&buffer[s_n], str, len);
+		ft_memcpy(&buffer[s_n], str, len);
 		s_n += len;
 		*n += len;
 	}
@@ -65,17 +66,14 @@ void	ft_printstr(char *str, size_t len, int *n)
 
 int		ft_printf(const char *restrict format, ...)
 {
-	//t_list	*str;
 	va_list ap;
 	int		n;
 
 	n = 0;
-	//str = 0;
 	va_start(ap, format);
 	if (ft_readformat(&n, (char *)format, ap) == -1)
 		ft_exit();
 	va_end(ap);
 	ft_printstr(NULL, 0, &n);
-	//str ? ft_lstdel(&str, ft_cleanup) : str;
 	return (n);
 }
