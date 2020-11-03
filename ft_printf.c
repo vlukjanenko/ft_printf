@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:34:22 by majosue           #+#    #+#             */
-/*   Updated: 2020/11/03 05:13:57 by majosue          ###   ########.fr       */
+/*   Updated: 2020/11/03 05:29:34 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,9 @@ const char	g_modi_tab[NBR_MODS + 1] =
 
 void	ft_exit(void)
 {
-	perror("ERROR");
+	ft_putendl_fd("ERROR", 2);
 	exit(0);
 }
-
-/*
-**	Переписать очищалку
-*/
 
 void	ft_cleanup(void *content, size_t content_size)
 {
