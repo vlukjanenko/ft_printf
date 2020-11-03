@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:10:10 by majosue           #+#    #+#             */
-/*   Updated: 2020/11/02 21:09:43 by majosue          ###   ########.fr       */
+/*   Updated: 2020/11/03 05:15:57 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 int	ft_save_before_ptr(t_list **str, char **ptr, char **format)
 {
 	t_fmt	chain;
-	ft_bzero(&chain, sizeof(chain));
 
+	ft_bzero(&chain, sizeof(chain));
 	if (*ptr == *format)
 		return (0);
 	chain.str = *format;
@@ -49,10 +49,10 @@ int	ft_save_after_ptr(t_list **str, char **ptr, char **format, va_list ap)
 
 int	ft_readformat(t_list **str, char *format, va_list ap)
 {
-	char *ptr;
-	t_fmt chain;
+	char	*ptr;
+	t_fmt	chain;
 
-	ft_bzero(&chain, sizeof chain);
+	ft_bzero(&chain, sizeof(chain));
 	if (!*format)
 		return (0);
 	if ((ptr = ft_strchr(format, '%')))

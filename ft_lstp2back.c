@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:01:24 by majosue           #+#    #+#             */
-/*   Updated: 2020/08/14 08:10:01 by majosue          ###   ########.fr       */
+/*   Updated: 2020/11/03 05:10:40 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,34 @@ void const *content, size_t content_size)
 	}
 	var1->next = ft_lstnew(content, content_size);
 	return (var1->next);
+}
+
+/*
+** Fill newstr with content at right & c at left
+*/
+
+void	ft_add_left(t_fmt *chain, void **newstr, size_t w, char c)
+{
+	void *begin;
+
+	begin = *newstr;
+	ft_memset(*newstr, c, w - chain->len);
+	*newstr += w - chain->len;
+	ft_memcpy(*newstr, chain->str, chain->len);
+	*newstr = begin;
+}
+
+/*
+** Fill newstr with content at left & c at right
+*/
+
+void	ft_add_right(t_fmt *chain, void **newstr, size_t w, char c)
+{
+	void *begin;
+
+	begin = *newstr;
+	ft_memcpy(*newstr, chain->str, chain->len);
+	*newstr += chain->len;
+	ft_memset(*newstr, c, w - chain->len);
+	*newstr = begin;
 }

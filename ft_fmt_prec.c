@@ -6,11 +6,25 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:37:59 by majosue           #+#    #+#             */
-/*   Updated: 2020/11/02 21:48:03 by majosue          ###   ########.fr       */
+/*   Updated: 2020/11/03 05:06:41 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+/*
+** Set precision in p and return 1 if it exist
+*/
+
+int	ft_prec(t_fmt *chain, size_t *p)
+{
+	int present;
+
+	present = chain->prec[0];
+	if (present)
+		*p = chain->prec[1];
+	return (present);
+}
 
 int	ft_fmt_prec_x(t_fmt *chain)
 {
@@ -31,7 +45,8 @@ int	ft_fmt_prec_x(t_fmt *chain)
 	chain->str[1] = '0';
 	size = p + 2;
 	if (!(newstr = ft_strnew(size)))
-		return (0);
+		ft_exit();
+	chain->str_need_free = 1;
 	ft_add_left(chain, &newstr, size, '0');
 	((char *)newstr)[1] = 'X';
 	free(chain->str);
@@ -63,7 +78,8 @@ int	ft_fmt_prec_s(t_fmt *chain)
 	chain->str[0] = '0';
 	size = p + 1;
 	if (!(newstr = ft_strnew(size)))
-		return (0);
+		ft_exit();
+	chain->str_need_free = 1;
 	ft_add_left(chain, &newstr, size, '0');
 	((char *)newstr)[0] = sign;
 	free(chain->str);
@@ -86,14 +102,15 @@ int	ft_fmt_prec_d(t_fmt *chain)
 	presist = ft_prec(chain, &p);
 	if (presist && !p && chain->str[0] == '0')
 	{
-		chain->len = chain->shrp && chain->modi == 'o' ?\
-		chain->len : chain->len - 1;
+		chain->len = chain->flag[SHARP] && g_modi_tab[chain->modi] == 'o' ?
+												chain->len : chain->len - 1;
 		return (1);
 	}
 	if (p <= chain->len)
 		return (1);
 	if (!(newstr = ft_strnew(p)))
-		return (0);
+		ft_exit();
+	chain->str_need_free = 1;
 	ft_add_left(chain, &newstr, p, '0');
 	free(chain->str);
 	chain->str = newstr;
@@ -107,8 +124,8 @@ int	ft_fmt_prec_d(t_fmt *chain)
 
 int	ft_fmt_prec(t_fmt *chain)
 {
-	if (ft_isalnum(chain->str[0]) &&\
-	!ft_strchr(chain->str, 'X'))
+	if (ft_isalnum(chain->str[0]) &&
+		!ft_strchr(chain->str, 'X'))
 	{
 		if (!(ft_fmt_prec_d(chain)))
 			return (0);

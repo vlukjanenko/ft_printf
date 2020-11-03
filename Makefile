@@ -6,7 +6,7 @@
 #    By: majosue <majosue@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/13 10:14:46 by majosue           #+#    #+#              #
-#    Updated: 2020/11/02 05:07:55 by majosue          ###   ########.fr        #
+#    Updated: 2020/11/03 03:30:53 by majosue          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,10 @@ COMPILERC = gcc
 MAKERLIB = ar rc
 FLAGS = -Wall -Wextra -Werror -g
 SOURCES  =  ft_printf.c ft_lstp2back.c ft_readformat.c ft_chkflags.c \
-ft_gettab.c ft_get_f.c ft_add_left.c ft_add_right.c \
-ft_space.c ft_minus.c ft_plus.c ft_width.c \
-ft_prec.c ft_char.c ft_fmt_char.c ft_string.c ft_fmt_plus.c\
-ft_itoa_base.c ft_itoa_base_u.c ft_get_size.c ft_get_size_u.c ft_sharp.c \
-ft_fmt_width.c ft_fmt_prec.c ft_number.c ft_number_o.c ft_number_x.c \
-ft_number_u.c ft_ftoa.c ft_float.c\
+ft_string.c \
+ft_itoa_base.c ft_get_size.c  \
+ft_fmt_width.c ft_fmt_prec.c ft_number.c ft_number_x.c \
+ft_ftoa.c \
 libft/ft_atoi.c\
 libft/ft_bzero.c\
 libft/ft_isalnum.c\

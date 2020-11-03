@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:25:53 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/10 20:39:04 by majosue          ###   ########.fr       */
+/*   Updated: 2020/11/03 02:51:14 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,27 @@ char			*ft_itoa_base(long long int value, int base)
 		rezult[rezult_size - 1] = (uvalue % base) >= 10 ?\
 		uvalue % base - 10 + 'A' : uvalue % base + '0';
 		uvalue /= base;
+		rezult_size--;
+	}
+	return (rezult);
+}
+
+char			*ft_itoa_base_u(unsigned long long int value, int base)
+{
+	char	*rezult;
+	int		rezult_size;
+
+	if (base < 2 || base > 16)
+		return ((void *)0);
+	rezult_size = rn(value, base);
+	if (!(rezult = (char *)malloc(sizeof(char) * (rezult_size + 1))))
+		return ((void *)0);
+	rezult[rezult_size] = '\0';
+	while ((rezult_size - 1) >= 0)
+	{
+		rezult[rezult_size - 1] = (value % base) >= 10 ?\
+		value % base - 10 + 'A' : value % base + '0';
+		value /= base;
 		rezult_size--;
 	}
 	return (rezult);
