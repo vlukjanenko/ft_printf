@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:34:22 by majosue           #+#    #+#             */
-/*   Updated: 2020/11/03 05:29:34 by majosue          ###   ########.fr       */
+/*   Updated: 2020/11/04 01:12:04 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,36 +38,44 @@ void	ft_cleanup(void *content, size_t content_size)
 	}
 }
 
-int		ft_printstr(t_list *str)
+void	ft_printstr(char *str, size_t len, int *n)
 {
-	int		n;
-	t_fmt	*chain;
+	static size_t	s_n = 0;
+	static char buffer[BUFSIZE + 1] = {0,};
 
-	if (!str)
-		return (0);
-	n = 0;
-	while (str)
+	if (len == 0 || s_n + len > BUFSIZE)
 	{
-		chain = str->content;
-		write(1, chain->str, chain->len);
-		n = n + chain->len;
-		str = str->next;
+		write(1, buffer, s_n);
+		s_n = 0;
+		buffer[0] = 0;
 	}
-	return (n);
+	while (len > BUFSIZE)
+	{
+		write(1, str, len);
+		str += len;
+		*n += len;
+	}
+	if (str)
+	{
+		ft_strncat(&buffer[s_n], str, len);
+		s_n += len;
+		*n += len;
+	}
 }
 
 int		ft_printf(const char *restrict format, ...)
 {
-	t_list	*str;
+	//t_list	*str;
 	va_list ap;
 	int		n;
 
-	str = 0;
+	n = 0;
+	//str = 0;
 	va_start(ap, format);
-	if (ft_readformat(&str, (char *)format, ap) == -1)
+	if (ft_readformat(&n, (char *)format, ap) == -1)
 		ft_exit();
 	va_end(ap);
-	n = ft_printstr(str);
-	str ? ft_lstdel(&str, ft_cleanup) : str;
+	ft_printstr(NULL, 0, &n);
+	//str ? ft_lstdel(&str, ft_cleanup) : str;
 	return (n);
 }

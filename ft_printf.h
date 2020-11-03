@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 20:17:59 by majosue           #+#    #+#             */
-/*   Updated: 2020/11/03 05:14:44 by majosue          ###   ########.fr       */
+/*   Updated: 2020/11/04 00:54:31 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define FT_PRINTF_H
 # include "libft.h"
 # include <stdarg.h>
+
+# define BUFSIZE		512
 
 # define NBR_FLAGS		5
 
@@ -74,7 +76,7 @@ int				ft_printf(const char *restrict format, ...);
 int				ft_chkflags(char **str, t_fmt *chain, va_list ap);
 t_list			*ft_lstp2back(t_list **begin_list, void const *content,\
 size_t content_size);
-int				ft_readformat(t_list **str, char *format, va_list ap);
+int				ft_readformat(int *n, char *format, va_list ap);
 t_fun			ft_get_f(int idx);
 void			ft_exit(void);
 
@@ -109,5 +111,6 @@ char			*ft_itoa_base_u(unsigned long long int value, int base);
 char			*ft_ftoa(long double n, int p);
 void			ft_get_size(char *str, long long int *d, va_list ap);
 void			ft_get_size_u(char *str, unsigned long long int *d, va_list ap);
+void			ft_printstr(char *str, size_t len, int *n);
 
 #endif
