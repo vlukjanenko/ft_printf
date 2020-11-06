@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 20:17:59 by majosue           #+#    #+#             */
-/*   Updated: 2020/11/04 00:54:31 by majosue          ###   ########.fr       */
+/*   Updated: 2020/11/06 03:16:38 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,6 @@ int				ft_float(t_fmt *chain, va_list ap);
 void			ft_gettab(char *(*ftab)[5], int index);
 void			ft_add_left(t_fmt *chain, void **newstr, size_t w, char c);
 void			ft_add_right(t_fmt *chain, void **newstr, size_t w, char c);
-int				ft_width(t_fmt *chain, size_t *w);
-int				ft_prec(t_fmt *chain, size_t *p);
 int				ft_fmt_char(t_fmt *chain);
 int				ft_fmt_plus(t_fmt *chain);
 int				ft_fmt_width(t_fmt *chain);

@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 13:02:55 by majosue           #+#    #+#             */
-/*   Updated: 2020/11/03 05:16:46 by majosue          ###   ########.fr       */
+/*   Updated: 2020/11/06 03:26:54 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,15 @@ int	ft_fmt_sharp_f(t_fmt *chain)
 int	ft_float(t_fmt *chain, va_list ap)
 {
 	long double	d;
-	size_t		p;
 
-	p = 6;
-	ft_prec(chain, &p);
+	if (!chain->prec[0])
+	{
+		chain->prec[0] = 1;
+		chain->prec[1] = 6;
+	}
 	d = ft_strequ(chain->arg_size, "L") ? va_arg(ap, long double) :
 												va_arg(ap, double);
-	chain->str = ft_ftoa(d, p);
+	chain->str = ft_ftoa(d, chain->prec[1]);
 	chain->str ? chain->len = ft_strlen(chain->str) : 1;
 	if (!chain->str ||\
 		!(ft_fmt_sharp_f(chain)) ||
