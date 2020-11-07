@@ -111,10 +111,12 @@ void	ft_set_arg_size(char **str, t_fmt *chain)
 	}
 }
 
-int		ft_chkflags(char **str, t_fmt *chain, va_list ap)
+int		ft_chkflags(t_fmt *chain, va_list ap)
 {
-	int idx;
+	int		idx;
+	char	**str;
 
+	str = &chain->percent_sign;
 	while (is_char_in_tab(g_flag_tab, *(*str), &idx))
 	{
 		chain->flag[idx] = 1;

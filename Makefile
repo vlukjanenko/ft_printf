@@ -6,7 +6,7 @@
 #    By: majosue <majosue@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/13 10:14:46 by majosue           #+#    #+#              #
-#    Updated: 2020/11/04 01:20:43 by majosue          ###   ########.fr        #
+#    Updated: 2020/11/06 22:00:29 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ HEADER = ft_printf.h
 INCLUDES = libft/
 COMPILERC = gcc
 MAKERLIB = ar rc
-FLAGS = -Wall -Wextra -Werror -O3 -g
+FLAGS = -Wall -Wextra -Werror -O3
 SOURCES  =  ft_printf.c ft_lstp2back.c ft_readformat.c ft_chkflags.c \
 ft_string.c ft_itoa_base.c ft_get_size.c ft_fmt_width.c ft_fmt_prec.c \
 ft_number.c ft_number_x.c \

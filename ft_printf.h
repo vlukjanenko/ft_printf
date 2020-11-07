@@ -57,6 +57,8 @@ typedef union	u_type_u {
 
 typedef struct	s_fmt
 {
+	char		*percent_sign;
+	int			*n;
 	int			str_need_free;
 	char		*str;
 	char		arg_size[3];
@@ -73,10 +75,11 @@ extern const char g_modi_tab[NBR_MODS + 1];
 
 typedef int		(*t_fun)(t_fmt *, va_list);
 int				ft_printf(const char *restrict format, ...);
-int				ft_chkflags(char **str, t_fmt *chain, va_list ap);
+int				ft_dprintf(int fd, const char *restrict format, ...);
+int				ft_chkflags(t_fmt *chain, va_list ap);
 t_list			*ft_lstp2back(t_list **begin_list, void const *content,\
 size_t content_size);
-int				ft_readformat(int *n, char *format, va_list ap);
+int				ft_readformat(int fd, int *n, char *format, va_list ap);
 t_fun			ft_get_f(int idx);
 void			ft_exit(void);
 
@@ -109,6 +112,6 @@ char			*ft_itoa_base_u(unsigned long long int value, int base);
 char			*ft_ftoa(long double n, int p);
 void			ft_get_size(char *str, long long int *d, va_list ap);
 void			ft_get_size_u(char *str, unsigned long long int *d, va_list ap);
-void			ft_printstr(char *str, size_t len, int *n);
+void			ft_printstr(int fd, char *str, size_t len, int *n);
 
 #endif
