@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:37:59 by majosue           #+#    #+#             */
-/*   Updated: 2020/11/06 03:16:57 by majosue          ###   ########.fr       */
+/*   Updated: 2021/05/12 20:40:18 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	ft_fmt_prec_x(t_fmt *chain)
 		return (1);
 	chain->str[1] = '0';
 	size = chain->prec[1] + 2;
-	if (!(newstr = ft_strnew(size)))
+	newstr = ft_strnew(size);
+	if (!(newstr))
 		ft_exit();
 	chain->str_need_free = 1;
 	ft_add_left(chain, &newstr, size, '0');
@@ -57,7 +58,8 @@ int	ft_fmt_prec_s(t_fmt *chain)
 		return (1);
 	chain->str[0] = '0';
 	size = chain->prec[1] + 1;
-	if (!(newstr = ft_strnew(size)))
+	newstr = ft_strnew(size);
+	if (!(newstr))
 		ft_exit();
 	chain->str_need_free = 1;
 	ft_add_left(chain, &newstr, size, '0');
@@ -78,13 +80,14 @@ int	ft_fmt_prec_d(t_fmt *chain)
 
 	if (chain->prec[0] && !chain->prec[1] && chain->str[0] == '0')
 	{
-		chain->len = chain->flag[SHARP] && g_modi_tab[chain->modi] == 'o' ?
-												chain->len : chain->len - 1;
+		if (!(chain->flag[SHARP] && g_modi_tab[chain->modi] == 'o'))
+			chain->len = chain->len - 1;
 		return (1);
 	}
 	if (chain->prec[1] <= chain->len)
 		return (1);
-	if (!(newstr = ft_strnew(chain->prec[1])))
+	newstr = ft_strnew(chain->prec[1]);
+	if (!(newstr))
 		ft_exit();
 	chain->str_need_free = 1;
 	ft_add_left(chain, &newstr, chain->prec[1], '0');
@@ -100,7 +103,7 @@ int	ft_fmt_prec_d(t_fmt *chain)
 
 int	ft_fmt_prec(t_fmt *chain)
 {
-	if (ft_isalnum(chain->str[0]) &&
+	if (ft_isalnum(chain->str[0]) && \
 		!ft_strchr(chain->str, 'X'))
 	{
 		if (!(ft_fmt_prec_d(chain)))

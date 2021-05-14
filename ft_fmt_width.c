@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:52:00 by majosue           #+#    #+#             */
-/*   Updated: 2020/11/06 03:22:47 by majosue          ###   ########.fr       */
+/*   Updated: 2021/05/12 20:46:28 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ int	ft_fmt_plus(t_fmt *chain)
 
 	if ((chain->flag[PLUS] || chain->flag[SPACE]) && ft_isdigit(chain->str[0]))
 	{
-		if ((w = chain->len + 1) < chain->len)
+		w = chain->len + 1;
+		if (w < chain->len)
 			return (0);
-		if (!(newstr = ft_strnew(w)))
+		newstr = ft_strnew(w);
+		if (!(newstr))
 			ft_exit();
 		chain->str_need_free = 1;
 		if (chain->flag[PLUS])
@@ -47,12 +49,13 @@ int	ft_fmt_width_d(t_fmt *chain)
 
 	if (chain->widt[1] <= chain->len)
 		return (1);
-	if (!(newstr = ft_strnew(chain->widt[1])))
+	newstr = ft_strnew(chain->widt[1]);
+	if (!(newstr))
 		ft_exit();
 	chain->str_need_free = 1;
 	if (chain->flag[MINUS])
 		ft_add_right(chain, &newstr, chain->widt[1], ' ');
-	else if ((chain->flag[ZERO] && !chain->prec[0]) ||\
+	else if ((chain->flag[ZERO] && !chain->prec[0]) || \
 			(chain->flag[ZERO] && g_modi_tab[chain->modi] == 'f'))
 		ft_add_left(chain, &newstr, chain->widt[1], '0');
 	else
@@ -76,7 +79,8 @@ int	ft_fmt_width_s(t_fmt *chain)
 	if (chain->widt[1] <= chain->len)
 		return (1);
 	chain->str[0] = '0';
-	if (!(newstr = ft_strnew(chain->widt[1])))
+	newstr = ft_strnew(chain->widt[1]);
+	if (!(newstr))
 		ft_exit();
 	chain->str_need_free = 1;
 	ft_add_left(chain, &newstr, chain->widt[1], '0');
@@ -98,7 +102,8 @@ int	ft_fmt_width_x(t_fmt *chain)
 	if (chain->widt[1] <= chain->len)
 		return (1);
 	chain->str[1] = '0';
-	if (!(newstr = ft_strnew(chain->widt[1])))
+	newstr = ft_strnew(chain->widt[1]);
+	if (!(newstr))
 		ft_exit();
 	chain->str_need_free = 1;
 	ft_add_left(chain, &newstr, chain->widt[1], '0');
@@ -115,19 +120,19 @@ int	ft_fmt_width_x(t_fmt *chain)
 
 int	ft_fmt_width(t_fmt *chain)
 {
-	size_t p;
+	size_t	p;
 
 	p = 0;
-	if ((!ft_isalnum(chain->str[0]) &&
-		chain->flag[ZERO] == 1 && chain->prec[0] == 0 &&
-		chain->flag[MINUS] == 0) ||
-		(!ft_isalnum(chain->str[0]) && g_modi_tab[chain->modi] == 'f' &&
+	if ((!ft_isalnum(chain->str[0]) && \
+		chain->flag[ZERO] == 1 && chain->prec[0] == 0 && \
+		chain->flag[MINUS] == 0) || \
+		(!ft_isalnum(chain->str[0]) && g_modi_tab[chain->modi] == 'f' && \
 	chain->flag[ZERO] == 1 && chain->flag[MINUS] == 0))
 	{
 		if (!(ft_fmt_width_s(chain)))
 			return (0);
 	}
-	else if (ft_strchr(chain->str, 'X') &&\
+	else if (ft_strchr(chain->str, 'X') && \
 	chain->flag[ZERO] && !chain->prec[0] && chain->flag[MINUS] == 0)
 	{
 		if (!(ft_fmt_width_x(chain)))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: majosue <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 16:36:54 by majosue           #+#    #+#             */
-/*   Updated: 2019/09/28 21:44:44 by majosue          ###   ########.fr       */
+/*   Updated: 2021/05/12 16:29:11 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_strcat(char *s1, const char *s2)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = s1;
 	while (*s1 != '\0')

@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 12:10:10 by majosue           #+#    #+#             */
-/*   Updated: 2020/11/04 00:55:33 by majosue          ###   ########.fr       */
+/*   Updated: 2021/05/13 22:29:10 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int	ft_readformat(int fd, int *n, char *format, va_list ap)
 	chain.n = n;
 	if (!*format)
 		return (0);
-	if ((chain.percent_sign = ft_strchr(format, '%')))
+	chain.percent_sign = ft_strchr(format, '%');
+	if (chain.percent_sign)
 	{
 		if ((ft_save_before_ptr(&chain, &format)) == -1)
 			return (-1);

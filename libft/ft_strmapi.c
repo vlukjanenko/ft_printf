@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: majosue <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 16:53:30 by majosue           #+#    #+#             */
-/*   Updated: 2019/09/29 16:22:00 by majosue          ###   ########.fr       */
+/*   Updated: 2021/05/12 16:37:20 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ char	*ft_strmapi(char const *s, char (*f) (unsigned int, char))
 
 	if (!s || !f)
 		return (NULL);
-	if ((nstr = ft_strnew(ft_strlen(s))) == NULL)
+	nstr = ft_strnew(ft_strlen(s));
+	if (nstr == NULL)
 		return (NULL);
 	i = 0;
 	while (s[i] != '\0')

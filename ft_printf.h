@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 20:17:59 by majosue           #+#    #+#             */
-/*   Updated: 2020/11/06 03:16:38 by majosue          ###   ########.fr       */
+/*   Updated: 2021/05/13 22:15:54 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define F_MOD			9
 # define PERSENT_MOD	10
 
-typedef union	u_type {
+typedef union u_type {
 	int				i;
 	char			c;
 	short int		si;
@@ -47,7 +47,7 @@ typedef union	u_type {
 	long long int	lli;
 }				t_type;
 
-typedef union	u_type_u {
+typedef union u_type_u {
 	unsigned int			i;
 	unsigned char			c;
 	unsigned short int		si;
@@ -55,7 +55,7 @@ typedef union	u_type_u {
 	unsigned long long int	lli;
 }				t_type_u;
 
-typedef struct	s_fmt
+typedef struct s_fmt
 {
 	char		*percent_sign;
 	int			*n;
@@ -70,14 +70,14 @@ typedef struct	s_fmt
 	int			fd;
 }				t_fmt;
 
-extern const char g_flag_tab[NBR_FLAGS + 1];
-extern const char g_modi_tab[NBR_MODS + 1];
+extern const char	g_flag_tab[NBR_FLAGS + 1];
+extern const char	g_modi_tab[NBR_MODS + 1];
 
-typedef int		(*t_fun)(t_fmt *, va_list);
+typedef int			(*t_fun)(t_fmt *chain, va_list ap);
 int				ft_printf(const char *restrict format, ...);
 int				ft_dprintf(int fd, const char *restrict format, ...);
 int				ft_chkflags(t_fmt *chain, va_list ap);
-t_list			*ft_lstp2back(t_list **begin_list, void const *content,\
+t_list			*ft_lstp2back(t_list **begin_list, void const *content, \
 size_t content_size);
 int				ft_readformat(int fd, int *n, char *format, va_list ap);
 t_fun			ft_get_f(int idx);

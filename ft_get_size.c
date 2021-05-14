@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 15:26:13 by majosue           #+#    #+#             */
-/*   Updated: 2020/11/03 05:09:48 by majosue          ###   ########.fr       */
+/*   Updated: 2021/05/13 21:54:45 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 void	ft_get_size_part2(char *str, long long int *d, va_list ap)
 {
-	t_type tmp;
+	t_type	tmp;
 
 	if (ft_strequ(str, "h"))
 	{
@@ -34,7 +34,7 @@ void	ft_get_size_part2(char *str, long long int *d, va_list ap)
 
 void	ft_get_size(char *str, long long int *d, va_list ap)
 {
-	t_type tmp;
+	t_type	tmp;
 
 	if (!str[0])
 	{
@@ -60,7 +60,7 @@ void	ft_get_size(char *str, long long int *d, va_list ap)
 
 void	ft_get_size_u_part2(char *str, unsigned long long int *d, va_list ap)
 {
-	t_type_u tmp;
+	t_type_u	tmp;
 
 	if (ft_strequ(str, "h"))
 	{
@@ -76,7 +76,7 @@ void	ft_get_size_u_part2(char *str, unsigned long long int *d, va_list ap)
 
 void	ft_get_size_u(char *str, unsigned long long int *d, va_list ap)
 {
-	t_type_u tmp;
+	t_type_u	tmp;
 
 	if (!str[0])
 	{
@@ -102,7 +102,7 @@ void	ft_get_size_u(char *str, unsigned long long int *d, va_list ap)
 
 t_fun	ft_get_f(int idx)
 {
-	t_fun ftab[11];
+	t_fun	ftab[11];
 
 	ftab[0] = &ft_char;
 	ftab[1] = &ft_string;

@@ -6,15 +6,15 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 18:02:01 by majosue           #+#    #+#             */
-/*   Updated: 2020/11/03 05:00:18 by majosue          ###   ########.fr       */
+/*   Updated: 2021/05/12 20:33:08 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		is_char_in_tab(const char *flags, char c, int *idx)
+int	is_char_in_tab(const char *flags, char c, int *idx)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (flags[i])
@@ -31,7 +31,7 @@ int		is_char_in_tab(const char *flags, char c, int *idx)
 
 void	ft_set_w(char **str, t_fmt *chain, va_list ap)
 {
-	int tmp;
+	int	tmp;
 
 	if (*(*str) == '*')
 	{
@@ -57,7 +57,7 @@ void	ft_set_w(char **str, t_fmt *chain, va_list ap)
 
 void	ft_set_p(char **str, t_fmt *chain, va_list ap)
 {
-	int tmp;
+	int	tmp;
 
 	chain->prec[0] = 1;
 	chain->prec[1] = 0;
@@ -111,7 +111,7 @@ void	ft_set_arg_size(char **str, t_fmt *chain)
 	}
 }
 
-int		ft_chkflags(t_fmt *chain, va_list ap)
+int	ft_chkflags(t_fmt *chain, va_list ap)
 {
 	int		idx;
 	char	**str;

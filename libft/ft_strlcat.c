@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 17:52:40 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/12 20:59:20 by majosue          ###   ########.fr       */
+/*   Updated: 2021/05/12 20:04:53 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,26 @@
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	size_t len;
-	size_t lend;
-	size_t i;
+	size_t	dst_len;
+	size_t	i;
+	size_t	src_len;
+	size_t	result;
 
-	len = (size < ft_strlen(dst) ? size : ft_strlen(dst)) + ft_strlen(src);
-	lend = ft_strlen(dst);
-	if (!dst || !src)
-		return (0);
-	if (lend >= size)
-		return (len);
 	i = 0;
-	while (i < (size - lend - 1) && src[i] != '\0')
+	dst_len = ft_strlen(dst);
+	src_len = ft_strlen(src);
+	result = dst_len + src_len;
+	if (size < dst_len)
+		return (size + src_len);
+	while (dst_len < size && src[i])
 	{
-		*(dst + lend + i) = src[i];
+		dst[dst_len] = src[i];
+		dst_len++;
 		i++;
 	}
-	*(dst + lend + i) = '\0';
-	return (len);
+	if (dst_len == size)
+		dst[size - 1] = 0;
+	else
+		dst[dst_len] = 0;
+	return (result);
 }

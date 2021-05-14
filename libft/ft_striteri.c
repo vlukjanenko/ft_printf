@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: majosue <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 15:57:20 by majosue           #+#    #+#             */
-/*   Updated: 2019/09/29 11:46:23 by majosue          ###   ########.fr       */
+/*   Updated: 2021/05/12 16:31:23 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_striteri(char *s, void (*f) (unsigned int, char *))
 {
-	unsigned int i;
+	unsigned int	i;
 
 	if (s && f)
 	{

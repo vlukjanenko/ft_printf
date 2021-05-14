@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 12:59:49 by majosue           #+#    #+#             */
-/*   Updated: 2019/11/12 21:37:03 by majosue          ###   ########.fr       */
+/*   Updated: 2021/05/12 16:28:57 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 static void	ft_putabs(int n)
 {
-	unsigned int nbr;
+	unsigned int	nbr;
 
-	nbr = n >= 0 ? n : -n;
+	if (n >= 0)
+		nbr = n;
+	else
+		nbr = -n;
 	if (nbr != 0)
 	{
 		ft_putabs(nbr / 10);
@@ -24,7 +27,7 @@ static void	ft_putabs(int n)
 	}
 }
 
-void		ft_putnbr(int n)
+void	ft_putnbr(int n)
 {
 	if (n == 0)
 		ft_putchar('0');

@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 16:42:20 by majosue           #+#    #+#             */
-/*   Updated: 2019/12/16 15:57:07 by majosue          ###   ########.fr       */
+/*   Updated: 2021/05/14 06:10:38 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ char	*ft_str_combain(char *entire, char *bufer, char *sign, int p)
 	char	*res;
 
 	len = ft_strlen(sign) + ft_strlen(entire) + p;
-	len = p > 0 ? len + 1 : len;
-	if (!(res = ft_strnew(len)))
+	if (p > 0)
+		len++;
+	res = ft_strnew(len);
+	if (!(res))
 		return (0);
 	ft_strcat(res, sign);
 	ft_strcat(res, entire);
@@ -27,30 +29,20 @@ char	*ft_str_combain(char *entire, char *bufer, char *sign, int p)
 	{
 		ft_strcat(res, ".");
 		ft_strcat(res, bufer);
-		ft_memset(res + len - (p - ft_strlen(bufer)),\
+		ft_memset(res + len - (p - ft_strlen(bufer)), \
 		'0', p - ft_strlen(bufer));
 	}
 	return (res);
 }
 
-void	ft_to_string(char (*bufer)[70], int n)
+int	ft_round(char (*bufer)[70], int p)
 {
-	int i;
+	int	hd;
 
-	n > 70 ? n = 70 : n;
-	i = 0;
-	while (i < n)
-	{
-		(*bufer)[i] = (*bufer)[i] + '0';
-		i++;
-	}
-}
-
-int		ft_round(char (*bufer)[70], int p)
-{
-	int hd;
-
-	hd = (*bufer)[p] < 5 ? 0 : 1;
+	if ((*bufer)[p] < 5)
+		hd = 0;
+	else
+		hd = 1;
 	(*bufer)[p] = 0;
 	while (hd == 1 && p > 0)
 	{
@@ -61,7 +53,32 @@ int		ft_round(char (*bufer)[70], int p)
 	return (hd);
 }
 
-int		ft_fract(char (*bufer)[70], long double n, int p)
+int	ft_to_string(char (*bufer)[70], int p, int i)
+{
+	int	j;
+	int	n;
+	int	hd;
+
+	hd = 0;
+	if (i > p)
+	{
+		hd = ft_round(bufer, p);
+		n = p;
+	}
+	else
+		n = i;
+	if (n > 70)
+		n = 70;
+	j = 0;
+	while (j < n)
+	{
+		(*bufer)[j] = (*bufer)[j] + '0';
+		j++;
+	}
+	return (hd);
+}
+
+int	ft_fract(char (*bufer)[70], long double n, int p)
 {
 	int					i;
 	int					hd;
@@ -75,20 +92,25 @@ int		ft_fract(char (*bufer)[70], long double n, int p)
 	while (n > 0 && i < 70)
 	{
 		n = 10 * n;
-		(*bufer)[i] = i < 19 ? (unsigned long long)(m * tmp) % 10 : (char)(n);
-		i < 19 ? tmp *= 10 : i;
+		if (i < 19)
+			(*bufer)[i] = (unsigned long long)(m * tmp) % 10;
+		else
+			(*bufer)[i] = (char)(n);
+		tmp *= 10;
 		n = (n - (char)n);
 		i++;
 	}
-	if (i > p)
-	{
-		hd = ft_round(bufer, p);
-		ft_to_string(bufer, p);
-	}
-	else
-		ft_to_string(bufer, i);
+	hd = ft_to_string(bufer, p, i);
 	return (hd);
 }
+
+/*
+**	Output string from long double n with precidion p
+**
+**	entire - integer part +
+**	hd - integer result of rounding fract part
+**	buffer - holde fract part;
+*/
 
 char	*ft_ftoa(long double n, int p)
 {
@@ -98,13 +120,20 @@ char	*ft_ftoa(long double n, int p)
 	char	bufer[70];
 	int		hd;
 
-	sign = n < 0 ? "-" : "";
-	n = n < 0 ? -n : n;
+	if (n < 0)
+	{
+		sign = "-";
+		n = -n;
+	}
+	else
+		sign = "";
 	ft_bzero(bufer, 70);
 	hd = ft_fract(&bufer, n - (long int)n, p);
-	if (!(entire = ft_itoa_base((long int)n + hd, 10)))
+	entire = ft_itoa_base((long int)n + hd, 10);
+	if (!(entire))
 		return (0);
-	if (!(rezult = ft_str_combain(entire, bufer, sign, p)))
+	rezult = ft_str_combain(entire, bufer, sign, p);
+	if (!(rezult))
 		return (0);
 	free(entire);
 	return (rezult);

@@ -6,16 +6,16 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 14:01:24 by majosue           #+#    #+#             */
-/*   Updated: 2020/11/03 05:10:40 by majosue          ###   ########.fr       */
+/*   Updated: 2021/05/13 21:55:37 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-t_list	*ft_lstp2back(t_list **begin_list,\
+t_list	*ft_lstp2back(t_list **begin_list, \
 void const *content, size_t content_size)
 {
-	t_list *var1;
+	t_list	*var1;
 
 	var1 = *begin_list;
 	if (var1 == 0)
@@ -36,7 +36,7 @@ void const *content, size_t content_size)
 
 void	ft_add_left(t_fmt *chain, void **newstr, size_t w, char c)
 {
-	void *begin;
+	void	*begin;
 
 	begin = *newstr;
 	ft_memset(*newstr, c, w - chain->len);
@@ -51,7 +51,7 @@ void	ft_add_left(t_fmt *chain, void **newstr, size_t w, char c)
 
 void	ft_add_right(t_fmt *chain, void **newstr, size_t w, char c)
 {
-	void *begin;
+	void	*begin;
 
 	begin = *newstr;
 	ft_memcpy(*newstr, chain->str, chain->len);

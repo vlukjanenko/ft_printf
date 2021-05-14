@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 10:34:22 by majosue           #+#    #+#             */
-/*   Updated: 2020/11/06 22:13:39 by marvin           ###   ########.fr       */
+/*   Updated: 2021/05/13 22:08:56 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ void	ft_printstr(int fd, char *str, size_t len, int *n)
 	}
 }
 
-int		ft_printf(const char *restrict format, ...)
+int	ft_printf(const char *restrict format, ...)
 {
-	va_list ap;
+	va_list	ap;
 	int		n;
 
 	n = 0;
@@ -66,9 +66,9 @@ int		ft_printf(const char *restrict format, ...)
 	return (n);
 }
 
-int		ft_dprintf(int fd, const char *restrict format, ...)
+int	ft_dprintf(int fd, const char *restrict format, ...)
 {
-	va_list ap;
+	va_list	ap;
 	int		n;
 
 	n = 0;
