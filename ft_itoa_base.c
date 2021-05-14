@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 16:25:53 by majosue           #+#    #+#             */
-/*   Updated: 2021/05/14 06:56:48 by majosue          ###   ########.fr       */
+/*   Updated: 2021/05/14 07:06:00 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,48 +28,6 @@ static int	rn(unsigned long long value, int base)
 	return (rn);
 }
 
-/* char	*ft_itoa_base(long long int value, int base)
-{
-	unsigned long long int	uvalue;
-	char					*rezult;
-	int						rezult_size;
-	int						sign;
-
-	sign = 0;
-	if (base < 2 || base > 16)
-		return ((void *)0);
-	if (value < 0)
-	{
-		uvalue = -value;
-		if (base == 10)
-			sign = 1;
-	}
-	else
-		uvalue = value;
-	rezult_size = rn(uvalue, base);
-	rezult_size += sign;
-	rezult = (char *)malloc(sizeof(char) * (rezult_size + 1));
-	if (!(rezult))
-		return ((void *)0);
-	rezult[rezult_size] = '\0';
-	if (sign)
-		rezult[0] = '-';
-	while ((rezult_size - 1) >= sign)
-	{
-		if ((uvalue % base) >= 10)
-		{
-			rezult[rezult_size - 1] = uvalue % base - 10 + 'A';
-		}
-		else
-		{
-			rezult[rezult_size - 1] = uvalue + '0';
-		}
-		uvalue /= base;
-		rezult_size--;
-	}
-	return (rezult);
-}
- */
 char	*ft_itoa_base_u(unsigned long long int value, int base)
 {
 	char	*rezult;
