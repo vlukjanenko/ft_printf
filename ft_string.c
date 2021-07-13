@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 13:02:55 by majosue           #+#    #+#             */
-/*   Updated: 2021/05/13 22:39:25 by majosue          ###   ########.fr       */
+/*   Updated: 2021/07/13 19:24:56 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_fmt_char(t_fmt *chain)
 		return (1);
 	newstr = ft_strnew(chain->widt[1]);
 	if (!(newstr))
-		ft_exit();
+		return (clean_error_return (chain, 0));
 	chain->str_need_free = 1;
 	if (chain->flag[MINUS])
 		ft_add_right(chain, &newstr, chain->widt[1], ' ');
@@ -63,7 +63,7 @@ int	ft_char(t_fmt *chain, va_list ap)
 		s1 = va_arg(ap, int);
 	chain->str = ft_strnew(1);
 	if (!(chain->str))
-		ft_exit();
+		return (clean_error_return (chain, 0));
 	chain->str_need_free = 1;
 	chain->str[0] = (char)s1;
 	chain->len = 1;
@@ -86,7 +86,7 @@ int	ft_fmt_sharp_f(t_fmt *chain)
 		return (1);
 	newstr = ft_strjoin(chain->str, ".");
 	if (!(newstr))
-		ft_exit();
+		return (clean_error_return (chain, 0));
 	chain->str_need_free = 1;
 	free(chain->str);
 	chain->str = newstr;
@@ -121,7 +121,7 @@ int	ft_float(t_fmt *chain, va_list ap)
 		!(ft_fmt_plus(chain)) || \
 		!(ft_fmt_width(chain)))
 	{
-		return (0);
+		return (clean_error_return (chain, -1));
 	}
 	chain->str_need_free = 1;
 	return (1);

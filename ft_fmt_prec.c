@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:37:59 by majosue           #+#    #+#             */
-/*   Updated: 2021/05/12 20:40:18 by majosue          ###   ########.fr       */
+/*   Updated: 2021/07/13 19:24:56 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_fmt_prec_x(t_fmt *chain)
 	size = chain->prec[1] + 2;
 	newstr = ft_strnew(size);
 	if (!(newstr))
-		ft_exit();
+		return (clean_error_return (chain, 0));
 	chain->str_need_free = 1;
 	ft_add_left(chain, &newstr, size, '0');
 	((char *)newstr)[1] = 'X';
@@ -60,7 +60,7 @@ int	ft_fmt_prec_s(t_fmt *chain)
 	size = chain->prec[1] + 1;
 	newstr = ft_strnew(size);
 	if (!(newstr))
-		ft_exit();
+		return (clean_error_return (chain, 0));
 	chain->str_need_free = 1;
 	ft_add_left(chain, &newstr, size, '0');
 	((char *)newstr)[0] = sign;
@@ -88,7 +88,7 @@ int	ft_fmt_prec_d(t_fmt *chain)
 		return (1);
 	newstr = ft_strnew(chain->prec[1]);
 	if (!(newstr))
-		ft_exit();
+		return (clean_error_return (chain, 0));
 	chain->str_need_free = 1;
 	ft_add_left(chain, &newstr, chain->prec[1], '0');
 	free(chain->str);

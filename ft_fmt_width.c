@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:52:00 by majosue           #+#    #+#             */
-/*   Updated: 2021/05/12 20:46:28 by majosue          ###   ########.fr       */
+/*   Updated: 2021/07/13 19:24:56 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_fmt_plus(t_fmt *chain)
 			return (0);
 		newstr = ft_strnew(w);
 		if (!(newstr))
-			ft_exit();
+			return (clean_error_return (chain, 0));
 		chain->str_need_free = 1;
 		if (chain->flag[PLUS])
 			c = '+';
@@ -51,7 +51,7 @@ int	ft_fmt_width_d(t_fmt *chain)
 		return (1);
 	newstr = ft_strnew(chain->widt[1]);
 	if (!(newstr))
-		ft_exit();
+		return (clean_error_return (chain, 0));
 	chain->str_need_free = 1;
 	if (chain->flag[MINUS])
 		ft_add_right(chain, &newstr, chain->widt[1], ' ');
@@ -81,7 +81,7 @@ int	ft_fmt_width_s(t_fmt *chain)
 	chain->str[0] = '0';
 	newstr = ft_strnew(chain->widt[1]);
 	if (!(newstr))
-		ft_exit();
+		return (clean_error_return (chain, 0));
 	chain->str_need_free = 1;
 	ft_add_left(chain, &newstr, chain->widt[1], '0');
 	((char *)newstr)[0] = sign;
@@ -104,7 +104,7 @@ int	ft_fmt_width_x(t_fmt *chain)
 	chain->str[1] = '0';
 	newstr = ft_strnew(chain->widt[1]);
 	if (!(newstr))
-		ft_exit();
+		return (clean_error_return (chain, 0));
 	chain->str_need_free = 1;
 	ft_add_left(chain, &newstr, chain->widt[1], '0');
 	((char *)newstr)[1] = 'X';

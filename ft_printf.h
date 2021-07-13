@@ -6,7 +6,7 @@
 /*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 20:17:59 by majosue           #+#    #+#             */
-/*   Updated: 2021/05/13 22:15:54 by majosue          ###   ########.fr       */
+/*   Updated: 2021/07/13 19:14:53 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ t_list			*ft_lstp2back(t_list **begin_list, void const *content, \
 size_t content_size);
 int				ft_readformat(int fd, int *n, char *format, va_list ap);
 t_fun			ft_get_f(int idx);
-void			ft_exit(void);
 
 /*
 ** conversion functions start
@@ -112,6 +111,7 @@ char			*ft_itoa_base_u(unsigned long long int value, int base);
 char			*ft_ftoa(long double n, int p);
 void			ft_get_size(char *str, long long int *d, va_list ap);
 void			ft_get_size_u(char *str, unsigned long long int *d, va_list ap);
-void			ft_printstr(int fd, char *str, size_t len, int *n);
+int				ft_printstr(int fd, char *str, size_t len, int *n);
+int				clean_error_return(t_fmt *chain, int return_value);
 
 #endif
