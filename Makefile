@@ -11,11 +11,12 @@
 # **************************************************************************** #
 
 NAME = libftprintf.a
+PATH_TO_LIBFT = ./libft
 COMPILERC = gcc
 MAKE_LIB = ar rcs
 FLAGS = -Wall -Wextra -Werror
-HEADERS = ./includes/ft_printf.h ../libft/includes/libft.h
-HEADERS_PATHS = ./includes/ ../libft/includes/
+HEADERS = ./includes/ft_printf.h $(PATH_TO_LIBFT)/includes/libft.h
+HEADERS_PATHS = ./includes/ $(PATH_TO_LIBFT)/includes/
 OBJECTS_DIRECTORY = ./objects/
 SOURCES_DIRECTORY = ./sources/
 INCLUDES = $(addprefix -I , $(HEADERS_PATHS))
@@ -31,17 +32,11 @@ SOURCES := $(addprefix $(SOURCES_DIRECTORY), $(SOURCES))
 
 all:  $(OBJECTS_DIRECTORY) $(NAME)
 
-#libft:
-#	@$(MAKE) -C ../libft
-
 $(NAME): $(OBJECTS)
 	$(MAKE_LIB) $(NAME) $?
 
 $(OBJECTS) : $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
 	$(COMPILERC) $(FLAGS) $(INCLUDES) -o $@ -c $<
-
-#$(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
-#	$(COMPILERC) $(FLAGS) $(INCLUDES) -o $@ -c $<
 
 $(OBJECTS_DIRECTORY):
 	@mkdir -p $(OBJECTS_DIRECTORY)
