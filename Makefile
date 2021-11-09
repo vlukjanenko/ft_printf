@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = libftprintf.a
-PATH_TO_LIBFT = ./libft
+PATH_TO_LIBFT = ../libft
 COMPILERC = gcc
 MAKE_LIB = ar rcs
 FLAGS = -Wall -Wextra -Werror
