@@ -3,68 +3,53 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: majosue <majosue@student.42.fr>            +#+  +:+       +#+         #
+#    By: majosue <majosue@student.21-school.ru>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/11/13 10:14:46 by majosue           #+#    #+#              #
-#    Updated: 2020/11/06 22:00:29 by marvin           ###   ########.fr        #
+#    Created: 2019/09/04 16:04:38 by majosue           #+#    #+#              #
+#    Updated: 2021/11/07 23:21:39 by majosue          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME =  libftprintf.a
-HEADER = ft_printf.h
-INCLUDES = libft/
+NAME = libftprintf.a
 COMPILERC = gcc
-MAKERLIB = ar rc
-FLAGS = -Wall -Wextra -Werror -O3
-SOURCES  =  ft_printf.c ft_lstp2back.c ft_readformat.c ft_chkflags.c \
-ft_string.c ft_itoa_base.c ft_get_size.c ft_fmt_width.c ft_fmt_prec.c \
-ft_number.c ft_number_x.c \
-ft_ftoa.c \
-libft/ft_atoi.c\
-libft/ft_bzero.c\
-libft/ft_isalnum.c\
-libft/ft_isdigit.c\
-libft/ft_lstdel.c\
-libft/ft_lstnew.c\
-libft/ft_memalloc.c\
-libft/ft_memchr.c\
-libft/ft_memcpy.c\
-libft/ft_memdel.c\
-libft/ft_memset.c\
-libft/ft_strcat.c\
-libft/ft_strchr.c\
-libft/ft_strjoin.c\
-libft/ft_strlen.c\
-libft/ft_strnew.c\
-libft/ft_strsub.c\
-libft/ft_strdup.c\
-libft/ft_strequ.c\
-libft/ft_strnequ.c\
-libft/ft_isalpha.c\
-libft/ft_memmove.c\
-libft/ft_strcpy.c\
-libft/ft_strncpy.c\
-libft/ft_putendl_fd.c\
-libft/ft_putchar_fd.c\
-libft/ft_memcpy.c
-
+MAKE_LIB = ar rcs
+FLAGS = -Wall -Wextra -Werror
+HEADERS = ./includes/ft_printf.h ../libft/includes/libft.h
+HEADERS_PATHS = ./includes/ ../libft/includes/
+OBJECTS_DIRECTORY = ./objects/
+SOURCES_DIRECTORY = ./sources/
+INCLUDES = $(addprefix -I , $(HEADERS_PATHS))
+SOURCES = \
+	ft_chkflags.c   ft_fmt_width.c  ft_get_size.c   ft_lstp2back.c \
+	ft_number_x.c   ft_readformat.c ft_fmt_prec.c   ft_ftoa.c \
+	ft_itoa_base.c  ft_number.c     ft_printf.c     ft_string.c
 OBJECTS = $(SOURCES:.c=.o)
+OBJECTS := $(addprefix $(OBJECTS_DIRECTORY), $(OBJECTS))
+SOURCES := $(addprefix $(SOURCES_DIRECTORY), $(SOURCES))
 
-all: $(NAME)
+.PHONY: all clean fclean re
+
+all:  $(OBJECTS_DIRECTORY) $(NAME)
+
+#libft:
+#	@$(MAKE) -C ../libft
 
 $(NAME): $(OBJECTS)
-	$(MAKERLIB) $(NAME) $(OBJECTS)
-	ranlib $(NAME)
+	$(MAKE_LIB) $(NAME) $?
 
-%.o: %.c $(HEADER) libft/libft.h
-	$(COMPILERC) $(FLAGS) -I $(INCLUDES) -o $@ -c $<
+$(OBJECTS) : $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
+	$(COMPILERC) $(FLAGS) $(INCLUDES) -o $@ -c $<
+
+#$(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
+#	$(COMPILERC) $(FLAGS) $(INCLUDES) -o $@ -c $<
+
+$(OBJECTS_DIRECTORY):
+	@mkdir -p $(OBJECTS_DIRECTORY)
 
 clean:
-	@rm -f $(OBJECTS)
-	@make -C libft/ clean
+	@rm -rf $(OBJECTS_DIRECTORY)
 
 fclean: clean
 	@rm -f $(NAME)
-	@make -C libft/ fclean
 
 re: fclean all

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_number_x.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
+/*   By: majosue <majosue@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 19:09:47 by majosue           #+#    #+#             */
-/*   Updated: 2021/07/13 19:24:56 by majosue          ###   ########.fr       */
+/*   Updated: 2021/11/01 09:32:45 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_fmt_lowc(t_fmt *chain)
 	i = 0;
 	while (i < chain->len)
 	{
-		if (chain->str[i] >= 'A' &&\
+		if (chain->str[i] >= 'A' && \
 		chain->str[i] <= 'X')
 			chain->str[i] = chain->str[i] + 32;
 		i++;
