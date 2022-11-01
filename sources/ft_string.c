@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_string.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
+/*   By: majosue <majosue@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 13:02:55 by majosue           #+#    #+#             */
-/*   Updated: 2021/07/13 19:24:56 by majosue          ###   ########.fr       */
+/*   Updated: 2022/11/01 20:23:21 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	ft_fmt_char(t_fmt *chain)
 		ft_add_left(chain, &newstr, chain->widt[1], '0');
 	else
 		ft_add_left(chain, &newstr, chain->widt[1], ' ');
+	free(chain->str);
 	chain->str = newstr;
 	chain->len = chain->widt[1];
 	return (1);

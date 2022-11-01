@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fmt_width.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: majosue <majosue@student.42.fr>            +#+  +:+       +#+        */
+/*   By: majosue <majosue@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:52:00 by majosue           #+#    #+#             */
-/*   Updated: 2021/07/13 19:24:56 by majosue          ###   ########.fr       */
+/*   Updated: 2022/11/01 20:25:31 by majosue          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,6 @@ int	ft_fmt_width_x(t_fmt *chain)
 
 int	ft_fmt_width(t_fmt *chain)
 {
-	size_t	p;
-
-	p = 0;
 	if ((!ft_isalnum(chain->str[0]) && \
 		chain->flag[ZERO] == 1 && chain->prec[0] == 0 && \
 		chain->flag[MINUS] == 0) || \
